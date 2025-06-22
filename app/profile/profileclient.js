@@ -19,7 +19,7 @@ const ProfileClient = () => {
         if (status === 'unauthenticated') {
             router.push("/login")
         }
-    },[session, status])
+    },[session, status, router])
     
     if (status === 'loading' || status === 'unauthenticated') {
         return <div className="text-white">Loading...</div>

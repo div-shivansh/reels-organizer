@@ -30,7 +30,7 @@ const Navbar = () => {
                     <span className='font-semibold'>About Us</span>
                 </Link>
                 {session?.user &&    <div className="image">
-                        <img src={session.user.image} width={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
+                        <Image src={session.user.image} width={40} height={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
                     </div>
                 }
                 {!session && 

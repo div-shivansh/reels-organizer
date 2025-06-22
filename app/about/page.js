@@ -16,7 +16,7 @@ const AboutPage = () => {
             and inspiration, it becomes easy to lose track of your favorite ones.
             Reels Organizer was born to solve that — to provide a clean, simple,
             and personalized way to save and manage reels you love, without depending
-            on Instagram's native tools or cluttered saved folders.
+            on Instagram&rsquo;s native tools or cluttered saved folders.
           </p>
         </section>
 
@@ -35,8 +35,8 @@ const AboutPage = () => {
           <ul className="list-disc list-inside text-gray-300 text-lg leading-8">
             <li>Users sign in securely using Google authentication.</li>
             <li>They can submit Instagram reel links directly from the interface.</li>
-            <li>The app scrapes essential details from the reel and stores it to the user's account.</li>
-            <li>If a reel already exists in the database, it's linked to the new user to avoid duplication.</li>
+            <li>The app scrapes essential details from the reel and stores it to the user&rsquo;s account.</li>
+            <li>If a reel already exists in the database, it&rsquo;s linked to the new user to avoid duplication.</li>
             <li>Users can categorize, delete, or revisit saved reels from their dashboard.</li>
           </ul>
         </section>
@@ -82,7 +82,7 @@ const AboutPage = () => {
           <h2 className="text-3xl font-semibold mb-4">Made with ❤️ by Shivansh</h2>
           <p className="text-lg leading-8 text-gray-300">
             This project was created as a solution to a simple but common problem — managing
-            your reel collection. If you're enjoying using this app or have feedback to make it
+            your reel collection. If you&rsquo;re enjoying using this app or have feedback to make it
             better, feel free to connect with me or contribute to the GitHub repository!
           </p>
         </section>
