@@ -1,18 +1,29 @@
 'use client'
 import React, { useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 
 const ProfileClient = () => {
-    const searchParams = useSearchParams()
 
     const router = useRouter()
 
-    const [email, setEmail] = useState(searchParams.get('email') || "")
     const [picture, setPicture] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confPassword, setConfPassword] = useState("")
+    const { data: session, status } = useSession()
+
+    useEffect(() => {
+        
+        if (status === 'unauthenticated') {
+            router.push("/login")
+        }
+    },[session, status])
+    
+    if (status === 'loading' || status === 'unauthenticated') {
+        return <div className="text-white">Loading...</div>
+    }
 
     const submit = async (e) => {
         e.preventDefault();
@@ -40,14 +51,14 @@ const ProfileClient = () => {
                 redirect: "follow"
             };
 
-            const r = await fetch("http://localhost:3000/api/add", requestOptions)
+            const r = await fetch("/api/add", requestOptions)
             const result = await r.json()
-            if (result.success) {
-                router.push(`/dashboard/${username}`)
-            } else {
-                alert("mail id already exists")
+            // if (result.success) {
+            //     router.push(`/dashboard`)
+            // } else {
+            //     alert("mail id already exists")
 
-            }
+            // }
         }
     }
 
@@ -59,7 +70,7 @@ const ProfileClient = () => {
                 <form onSubmit={submit} className='flex justify-center flex-col w-2/5 gap-5'>
                     <div className='mt-4'>
                         <span className='font-bold text-xl'>Select Your Gmail:</span>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className='bg-neutral-600 p-2 w-full' placeholder='Enter Mail Id' />
+                        <input value={session.user.email} readOnly type="email" className='bg-neutral-600 p-2 w-full' placeholder='Enter Mail Id' />
                     </div>
                     <div className='mt-4'>
                         <span className='font-bold text-xl'>Select Your Profile Picture:</span>

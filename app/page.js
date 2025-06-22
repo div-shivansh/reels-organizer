@@ -29,7 +29,7 @@ export default function Home() {
           </div>
         </div>
         <div className="right w-full flex items-center justify-center">
-          <Image src={"/banner.avif"} width={2000} height={2000} alt="banner" className="h-[85vh] w-auto" />
+          <Image src={"/banner.jpg"} width={2000} height={2000} alt="banner" className="h-[85vh] w-auto" />
         </div>
       </section>
       <section className="h-[92.1vh] bg-neutral-900 flex items-center justify-between sticky top-[7.68vh]">

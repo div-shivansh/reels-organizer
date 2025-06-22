@@ -1,7 +1,12 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 
 const Navbar = () => {
+    const {data: session} = useSession()
+
     return (
         <div className='bg-black text-white flex items-center justify-between p-4 px-20 sticky top-0 z-50'>
             <Link href={"/"}><div className="logo flex items-center justify-between">
@@ -24,6 +29,11 @@ const Navbar = () => {
                 <Link href={"/about"} className='relative text-white hover:text-white transition-all ease-in before:transition-[width] before:ease-in before:duration-200 before:absolute before:bg-white before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in after:duration-200 after:absolute after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]'>
                     <span className='font-semibold'>About Us</span>
                 </Link>
+                {session?.user &&    <div className="image">
+                        <img src={session.user.image} width={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
+                    </div>
+                }
+                {!session && 
                 <div className="buttons flex justify-center items-center gap-3 ml-10 ">
                     <Link href={"/login"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center transition-all duration-300 border border-transparent bg-red-600 text-white hover:bg-red-800">
                         <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Login</span>
@@ -31,14 +41,9 @@ const Navbar = () => {
                             <span className="button-type font-semibold">Login</span>
                         </div>
                     </div></Link>
-                    <Link href={"/signup"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-                        <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Sign Up</span>
-                        <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold text-black">Sign Up</span>
-                        </div>
-                    </div></Link>
+                    </div>
+                    }
                 </div>
-            </div>
         </div>
     )
 }
