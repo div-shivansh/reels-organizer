@@ -1,17 +1,39 @@
-import clientPromise from "@/lib/mongodb"
+import connectDB from "@/lib/mongodb";
+import Credentials from "@/models/Credentials";
 
 export async function POST(request) {
-    const body = await request.json()
-    const client = await clientPromise
-    const db = client.db("reelOrganizer")
-    const usercollection = db.collection("userCredentials")
+    try {
+        await connectDB();
+        const body = await request.json();
 
-    const doc = await usercollection.findOne({email: body.email})
+        console.log("Incoming body:", body)
 
-    if(doc){
-         return Response.json({success: false, error: true, message: 'Credentials are not available', result: null})
+        const existUser = await Credentials.findOne({email: body.email});
+
+        if(existUser) {
+            return Response.json({
+                success: false,
+                error: true,
+                message: "user already exists",
+                result: null
+            }, {status: 409})
+        }
+
+        const newUser = await Credentials.create(body);
+
+        return Response.json({
+            success: true,
+            error: false,
+            message: "user created successfully",
+            result: newUser
+        }, {status: 201})
+    } catch (error) {
+        console.error("Error saving user:", error)
+        return Response.json({
+            success: false,
+            error: true,
+            message: "something went wrong",
+            result: null
+        }, {status: 500})
     }
-
-    const result = await usercollection.insertOne(body)
-    return Response.json({success: true, error: false, message: 'User updated in database Successfully', result: result})
 }
