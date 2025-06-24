@@ -12,7 +12,7 @@ const ProfileClient = () => {
     const { data: session, status } = useSession()
 
     const [handle, setHandle] = useState("@")
-    const [number, setNumber] = useState("91")
+    const [number, setNumber] = useState("+91")
     const [file, setFile] = useState(null)
     const [picture, setPicture] = useState("")
     const [username, setUsername] = useState("")
@@ -183,7 +183,7 @@ const ProfileClient = () => {
                                 </div>
                                 <div className='flex flex-col gap-3 w-full'>
                                     <h3 className='text-lg font-semibold text-start'>WhatsApp No.</h3>
-                                    <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg' type="number" placeholder='+91' />
+                                    <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg' type="tel" placeholder='+91' />
                                 </div>
                             </div>
                             <span className='text-sm text-gray-400 mt-[-16]'>NOTE:- For Updates and some Chit chat :&#41; </span>
