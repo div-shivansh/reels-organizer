@@ -11,7 +11,7 @@ const ProfileClient = () => {
     const router = useRouter()
     const { data: session, status } = useSession()
 
-    const [handle, setHandle] = useState("@")
+    const [handle, setHandle] = useState("")
     const [number, setNumber] = useState("+91")
     const [file, setFile] = useState(null)
     const [picture, setPicture] = useState("")
@@ -84,7 +84,8 @@ const ProfileClient = () => {
             handle,
             number,
             tags,
-            bio
+            bio,
+            isProfileComplete: true
         });
 
         const requestOptions = {
@@ -179,11 +180,17 @@ const ProfileClient = () => {
                             <div className='flex gap-4 w-full'>
                                 <div className='flex flex-col gap-3 w-full'>
                                     <h3 className='text-lg font-semibold text-start'>Instagram handle</h3>
-                                    <input value={handle} onChange={(e) => setHandle(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg' type="text" placeholder='@' />
+                                    <div className='flex w-full'>
+                                    <input type="text" className='bg-transparent border-2 border-r-0 w-7 placeholder:text-white rounded-r-none outline-none border-white pl-2 py-1 rounded-lg placeholder:' placeholder='@' readOnly/>
+                                    <input value={handle} onChange={(e) => setHandle(e.target.value)} className='bg-transparent border-2 border-l-0 outline-none rounded-l-none border-white pr-2 py-1 rounded-lg w-full' type="text" />
+                                    </div>
                                 </div>
                                 <div className='flex flex-col gap-3 w-full'>
                                     <h3 className='text-lg font-semibold text-start'>WhatsApp No.</h3>
-                                    <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg' type="tel" placeholder='+91' />
+                                    <div className='flex w-full'>
+                                    <input type="text" className='bg-transparent border-2 border-r-0 w-10 placeholder:text-white rounded-r-none outline-none border-white pl-2 py-1 rounded-lg placeholder:' placeholder='+91' readOnly/>
+                                    <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent border-2 border-l-0 outline-none rounded-l-none border-white pr-2 py-1 rounded-lg w-full' type="number"/>
+                                    </div>
                                 </div>
                             </div>
                             <span className='text-sm text-gray-400 mt-[-16]'>NOTE:- For Updates and some Chit chat :&#41; </span>

@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
 import { ApifyClient } from 'apify-client';
+import connectDB from '@/lib/mongodb';
+import Reellinks from '@/models/Reellinks';
 
 export async function POST(request) {
-  const { url } = await request.json()
+  const { url, userEmail } = await request.json()
 
-  if (!url) {
-    return NextResponse.json({ success: false, message: 'No url provided' }, { status: 400 })
+  if (!url || !userEmail) {
+    return NextResponse.json({ success: false, message: 'Url or Email is missing' }, { status: 400 })
   }
+
+  const reelurl = url.split("/reel/")
+  const shortcd = reelurl[1]?.split("/")[0]
 
   // Initialize the ApifyClient with API token
   const client = new ApifyClient({
@@ -25,6 +29,18 @@ export async function POST(request) {
   };
 
   try {
+    await connectDB();
+
+    const existingReel = await Reellinks.findOne({ shortcode: shortcd });
+
+    if (existingReel) {
+      if (!existingReel.submittedBy.includes(userEmail)) {
+        existingReel.submittedBy.push(userEmail)
+        await existingReel.save()
+      }
+      return NextResponse.json({ success: true, saved: false, data: existingReel }, { status: 200 });
+    }
+
     const run = await client.actor("shu8hvrXbJbY3Eb9W").call(input);
     const { items } = await client.dataset(run.defaultDatasetId).listItems();
     const reel = items?.[0]
@@ -33,11 +49,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, message: 'No reel data found' }, { status: 404 })
     }
 
-    const mongodb = await clientPromise
-    const db = mongodb.db("reelOrganizer")
-    const collection = db.collection("userlinks")
-
-    const doc = { 
+    const newReel = await Reellinks.create({
       inputUrl: reel.inputUrl,
       reelId: reel.id,
       shortcode: reel.shortCode,
@@ -58,11 +70,10 @@ export async function POST(request) {
 
       timestamp: new Date(reel.timestamp),
       scrapedAt: new Date(),
-    };
+      submittedBy: [userEmail]
+    });
 
-    await collection.insertOne(doc);
-
-    return NextResponse.json({ success: true, saved: true, data: doc }, { status: 200 });
+    return NextResponse.json({ success: true, saved: true, data: newReel }, { status: 200 });
   } catch (error) {
     console.error('Apify or DB error:', error.message);
     return NextResponse.json({ success: false, message: 'Scraping or DB failed' }, { status: 500 });

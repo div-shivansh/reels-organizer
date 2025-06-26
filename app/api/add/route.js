@@ -19,7 +19,12 @@ export async function POST(request) {
             }, {status: 409})
         }
 
-        const newUser = await Credentials.create(body);
+        const newUser = await Credentials.create({
+            ...body,
+            isProfileComplete: body.isProfileComplete ?? false
+        });
+
+        
 
         return Response.json({
             success: true,
