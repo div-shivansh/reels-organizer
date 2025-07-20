@@ -1,11 +1,20 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
+import { useState } from 'react'
+import * as motion from "motion/react-client"
+import connectDB from '@/lib/mongodb'
+import Credentials from 'next-auth/providers/credentials'
 
 const Navbar = () => {
-    const {data: session} = useSession()
+    const { data: session } = useSession()
+    const [isopen, setIsopen] = useState(false)
+    
+    const toggledropdown = () => {
+        setIsopen(!isopen)
+    }
 
     return (
         <div className='bg-black text-white flex items-center justify-between p-4 px-20 sticky top-0 z-50'>
@@ -29,21 +38,28 @@ const Navbar = () => {
                 <Link href={"/about"} className='relative text-white hover:text-white transition-all ease-in before:transition-[width] before:ease-in before:duration-200 before:absolute before:bg-white before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in after:duration-200 after:absolute after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]'>
                     <span className='font-semibold'>About Us</span>
                 </Link>
-                {session?.user &&    <div className="image">
-                        <Image src={session.user.image} width={40} height={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
+                {session?.user && <div className="image flex justify-center items-center">
+                    <Image src={session.user.image} width={40} height={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
+                    <motion.svg animate={{rotate: isopen? 180:0}} width="40" height="40" viewBox="0 0 24 24" className="cursor-pointer" onClick={toggledropdown} fill="none">
+                        <path d="M7 10L12 15L17 10H7Z" fill="currentColor" />
+                    </motion.svg>
+                    {isopen && <motion.ul initial={{opacity: 0, scale: 0}} whileInView={{opacity: 1, scale: 1}} className=' cursor-pointer absolute top-15 right-20 bg-black text-white px-2 py-4 rounded-md'>
+                        <li className='cursor-pointer' onClick={() => {signOut()}}>Log Out</li> <hr />
+                        <li><Link href={'/profile'}>Profile</Link></li>
+                    </motion.ul>}
+                </div>
+                }
+                {!session &&
+                    <div className="buttons flex justify-center items-center gap-3 ml-10 ">
+                        <Link href={"/login"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center transition-all duration-300 border border-transparent bg-red-600 text-white hover:bg-red-800">
+                            <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Login</span>
+                            <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+                                <span className="button-type font-semibold">Login</span>
+                            </div>
+                        </div></Link>
                     </div>
                 }
-                {!session && 
-                <div className="buttons flex justify-center items-center gap-3 ml-10 ">
-                    <Link href={"/login"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center transition-all duration-300 border border-transparent bg-red-600 text-white hover:bg-red-800">
-                        <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Login</span>
-                        <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold">Login</span>
-                        </div>
-                    </div></Link>
-                    </div>
-                    }
-                </div>
+            </div>
         </div>
     )
 }
