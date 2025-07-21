@@ -3,18 +3,41 @@ import React from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import * as motion from "motion/react-client"
-import connectDB from '@/lib/mongodb'
-import Credentials from 'next-auth/providers/credentials'
 
 const Navbar = () => {
     const { data: session } = useSession()
     const [isopen, setIsopen] = useState(false)
+    const [profileImage, setProfileImage] = useState("")
     
     const toggledropdown = () => {
         setIsopen(!isopen)
     }
+
+    useEffect(() => {
+    const fetchUserFromDB = async () => {
+      try {
+        const res = await fetch(`/api/getUser?email=${session.user.email}`)
+        const data = await res.json()
+        console.log(data)
+
+        if (data.success && data.user.image) {
+          setProfileImage(data.user.image)  // Use image from DB
+        } else {
+          setProfileImage(session.user.image || "") // fallback to session image
+        }
+      } catch (err) {
+        console.error("Failed to load user", err)
+        setProfileImage(session?.user?.image || "")
+      }
+    }
+
+    if (session?.user?.email) {
+      fetchUserFromDB()
+    }
+  }, [session])
+    
 
     return (
         <div className='bg-black text-white flex items-center justify-between p-4 px-20 sticky top-0 z-50'>
@@ -39,7 +62,7 @@ const Navbar = () => {
                     <span className='font-semibold'>About Us</span>
                 </Link>
                 {session?.user && <div className="image flex justify-center items-center">
-                    <Image src={session.user.image} width={40} height={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
+                    <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="   picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
                     <motion.svg animate={{rotate: isopen? 180:0}} width="40" height="40" viewBox="0 0 24 24" className="cursor-pointer" onClick={toggledropdown} fill="none">
                         <path d="M7 10L12 15L17 10H7Z" fill="currentColor" />
                     </motion.svg>

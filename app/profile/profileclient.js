@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import Image from 'next/image'
 import { Calendar as CalendarIcon } from 'lucide-react';
+import { set } from 'mongoose'
 
 const ProfileClient = () => {
 
@@ -12,9 +13,10 @@ const ProfileClient = () => {
     const { data: session, status } = useSession()
 
     const [handle, setHandle] = useState("")
-    const [number, setNumber] = useState("+91")
+    const [number, setNumber] = useState("")
     const [file, setFile] = useState(null)
-    const [picture, setPicture] = useState("")
+    const [uploading, setUploading] = useState(false)
+    const [uploadedUrl, setUploadedUrl] = useState("")
     const [username, setUsername] = useState("")
     const [fname, setFname] = useState("")
     const [gender, setGender] = useState("")
@@ -56,13 +58,43 @@ const ProfileClient = () => {
         setTags(tags.filter((_, i) => i !== index));
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file && file.type.startsWith("image/")) {
-            const imageUrl = URL.createObjectURL(file);
-            setPicture(imageUrl); // This updates the preview image
+   const handleImageChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
+        setFile(selectedFile);
+
+        const formdata = new FormData();
+        setUploading(true);
+        formdata.append("file", selectedFile);
+        
+        try {
+            const res = await fetch("/api/imageupload", {
+                method: "POST",
+                body: formdata,
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setUploadedUrl(data.url);
+                console.log(data.url)
+                alert("Image uploaded successfully");
+            } else {
+                // Handle API errors
+                console.error("Upload failed:", data.message);
+                alert(data.message || "Upload failed");
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Something went wrong.");
+        } finally {
+            setUploading(false);
         }
-    };
+    } else {
+        alert("Please select a valid image file");
+    }
+};
 
     if (status === 'loading' || status === 'unauthenticated') {
         return <div className="text-white">Loading...</div>
@@ -78,7 +110,7 @@ const ProfileClient = () => {
             username,
             fname,
             lname,
-            image: picture || session.user.image,
+            image: uploadedUrl || session.user.image,
             gender,
             dob,
             handle,
@@ -116,7 +148,7 @@ const ProfileClient = () => {
                     <div className='flex flex-col gap-2'>
                         <h3 className='text-2xl font-bold text-start'>Profile picture</h3>
                         <div className='img flex items-center justify-center gap-7'>
-                            <Image src={picture || session.user.image} width={100} height={100} alt='profile' className='size-25 object-cover rounded-full selection:bg-transparent hover:opacity-90 transition-all duration-150' />
+                            <Image src={uploadedUrl || session.user.image} width={100} height={100} alt='profile' priority className='size-25 object-cover rounded-full selection:bg-transparent hover:opacity-90 transition-all duration-150' />
                             <div className='flex flex-col items-start justify-center gap-3'>
                                 <label htmlFor="filechose" className='button group relative inline-flex justify-center overflow-hidden whitespace-nowrap cursor-pointer rounded-full px-6 py-1 text-center transition-all duration-300 border border-transparent bg-transparent text-white hover:bg-white hover:text-black outline-2 outline-white outline-offset-2'>
                                     <span className='button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold'>Upload Photo</span>
