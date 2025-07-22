@@ -12,7 +12,6 @@ export async function GET(request) {
 
     await connectDB()
     const user = await Credentials.findOne({email})
-    console.log(user)
 
     if (!user) {
         return NextResponse.json({ success: false, message: "User not found"}, {status: 404})

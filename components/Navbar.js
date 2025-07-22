@@ -20,7 +20,6 @@ const Navbar = () => {
       try {
         const res = await fetch(`/api/getUser?email=${session.user.email}`)
         const data = await res.json()
-        console.log(data)
 
         if (data.success && data.user.image) {
           setProfileImage(data.user.image)  // Use image from DB

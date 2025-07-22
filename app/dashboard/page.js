@@ -10,6 +10,24 @@ const Dashboard = () => {
     const router = useRouter()
 
     useEffect(() => {
+        const fetchlinksfromDB = async () => {
+          try {
+            const res = await fetch(`/api/getLinks?email=${session.user.email}`)
+            const data = await res.json()
+
+            if (data.success) {
+              console.log("your data is", data)
+            } else {
+              console.log("some error is happedned", data.message)
+            }
+          } catch(err) {
+            console.error("failed to load links", err)
+          }
+        }
+
+        if (status === 'authenticated') {
+          fetchlinksfromDB()
+        }
       
         
         if (status === "unauthenticated") {
