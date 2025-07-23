@@ -111,34 +111,34 @@ const ProfileUser = () => {
         <div className='border border-neutral-500 rounded-4xl w-full h-[30vh] my-[60] flex flex-col py-5 px-10 gap-4'>
           <h3 className='font-semibold text-2xl mb-5'>Monthly Reels Stats</h3>
           <div className='flex items-center justify-evenly'>
-          <div class="relative size-40">
-            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200 dark:text-neutral-700" stroke-width="2" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-400" stroke-width="2" stroke-dasharray="37.5 100" stroke-linecap="round"></circle>
+          <div className="relative size-40">
+            <svg className="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-gray-200 dark:text-neutral-700" strokeWidth="2" strokeDasharray="75 100" strokeLinecap="round"></circle>
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-green-400" strokeWidth="2" strokeDasharray="37.5 100" strokeLinecap="round"></circle>
             </svg>
-            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <span class="text-5xl font-bold text-white">50</span>
-              <span class="text-white block text-xl">Saved</span>
+            <div className="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <span className="text-5xl font-bold text-white">50</span>
+              <span className="text-white block text-xl">Saved</span>
             </div>
           </div>
-          <div class="relative size-40">
-            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200 dark:text-neutral-700" stroke-width="2" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-400" stroke-width="2" stroke-dasharray="22.5 100" stroke-linecap="round"></circle>
+          <div className="relative size-40">
+            <svg className="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-gray-200 dark:text-neutral-700" strokeWidth="2" strokeDasharray="75 100" strokeLinecap="round"></circle>
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-green-400" strokeWidth="2" strokeDasharray="22.5 100" strokeLinecap="round"></circle>
             </svg>
-            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <span class="text-5xl font-bold text-white">30</span>
-              <span class="text-white block text-xl">Watched</span>
+            <div className="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <span className="text-5xl font-bold text-white">30</span>
+              <span className="text-white block text-xl">Watched</span>
             </div>
           </div>
-          <div class="relative size-40">
-            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200 dark:text-neutral-700" stroke-width="2" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-400" stroke-width="2" stroke-dasharray="7.5 100" stroke-linecap="round"></circle>
+          <div className="relative size-40">
+            <svg className="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-gray-200 dark:text-neutral-700" strokeWidth="2" strokeDasharray="75 100" strokeLinecap="round"></circle>
+              <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-green-400" strokeWidth="2" strokeDasharray="7.5 100" strokeLinecap="round"></circle>
             </svg>
-            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <span class="text-5xl font-bold text-white">10</span>
-              <span class="text-white block text-lg">Downloaded</span>
+            <div className="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <span className="text-5xl font-bold text-white">10</span>
+              <span className="text-white block text-lg">Downloaded</span>
             </div>
           </div>
           </div>
