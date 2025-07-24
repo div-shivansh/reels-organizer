@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -48,16 +48,24 @@ const ProfileUser = () => {
   return (
     <div className='bg-neutral-800 min-h-[86vh] w-full text-white'>
       <section className='px-20 py-5'>
+        <div className='flex items-center justify-between'>
+          <div className='flex flex-col justify-center'>
         <h1 className='text-white font-bold text-5xl'>Profile</h1>
         <span className='text-neutral-500'>View all your profile details here</span>
+          </div>
+          <div className='flex items-center justify-center gap-5'>
+            <button className='bg-neutral-700 p-2 px-5 text-2xl font-medium rounded-full hover:text-green-400 hover:scale-105 cursor-pointer transition-all duration-100 drop-shadow-2xl'>Edit Profile</button>
+            <button className='bg-neutral-700 p-2 px-5 text-2xl font-medium rounded-full hover:text-green-400 hover:scale-105 cursor-pointer transition-all duration-100 drop-shadow-2xl' onClick={() => {signOut()}}>Logout</button>
+          </div>
+        </  div>
         <div className='border-t-2 border-dashed mt-5 mb-10 border-neutral-500' />
         <div className='flex gap-15'>
-          <div className='border border-neutral-500 w-[30vw] h-[60vh] rounded-4xl flex flex-col items-center pt-5'>
+          <div className='border border-neutral-500 w-[30vw] h-[60vh] rounded-4xl flex flex-col items-center pt-5 drop-shadow-2xl bg-neutral-800'>
             <h2 className='font-bold text-3xl'>{userData.fname} {userData.lname}</h2>
             <span className='text-green-400 text-xl mb-7'>@{userData.username}</span>
             <Image src={userData.image} width={400} height={400} alt='profile' className='rounded-full border-40 border-neutral-500' />
           </div>
-          <div className='border border-neutral-500 rounded-4xl w-[60vw] py-6 px-7'>
+          <div className='border border-neutral-500 rounded-4xl w-[60vw] py-6 px-7 drop-shadow-2xl bg-neutral-800'>
             <h3 className='font-semibold text-2xl mb-5'>Bio and Other details</h3>
             <div className='flex flex-col p-5 gap-2'>
 
@@ -108,7 +116,7 @@ const ProfileUser = () => {
             </div>
           </div>
         </div>
-        <div className='border border-neutral-500 rounded-4xl w-full h-[30vh] my-[60] flex flex-col py-5 px-10 gap-4'>
+        <div className='border border-neutral-500 rounded-4xl w-full h-[30vh] my-[60] flex flex-col py-5 px-10 gap-4 drop-shadow-2xl bg-neutral-800'>
           <h3 className='font-semibold text-2xl mb-5'>Monthly Reels Stats</h3>
           <div className='flex items-center justify-evenly'>
           <div className="relative size-40">

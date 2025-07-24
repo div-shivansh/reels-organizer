@@ -1,7 +1,31 @@
 import { NextResponse } from 'next/server';
+import { v2 as cloudinary } from 'cloudinary';
 import { ApifyClient } from 'apify-client';
 import connectDB from '@/lib/mongodb';
 import Reellinks from '@/models/Reellinks';
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export async function uploadToCloudinary(url, folder) {
+    try {
+        const result = await cloudinary.uploader.upload(url, {
+            folder,
+            resource_type: "auto",
+        })
+        return {
+            success: true,
+            url: result.secure_url,
+            public_id: result.public_id,
+        }
+    } catch (error) {
+        console.error("Cloudinary upload error:", error)
+        return {success: false, error}
+    }
+}
 
 export async function POST(request) {
   const { url, userEmail } = await request.json()
@@ -13,12 +37,11 @@ export async function POST(request) {
   const reelurl = url.split("/reel/")
   const shortcd = reelurl[1]?.split("/")[0]
 
-  // Initialize the ApifyClient with API token
   const client = new ApifyClient({
     token: process.env.APIFY_KEY,
   });
 
-  // Prepare Actor input
+
   const input = {
     "directUrls": [url],
     "resultsType": "posts",
@@ -49,6 +72,13 @@ export async function POST(request) {
       return NextResponse.json({ success: false, message: 'No reel data found' }, { status: 404 })
     }
 
+    const thumbnailUpload = await uploadToCloudinary(reel.displayUrl, 'reel-thumbnails')
+    const videoUpload = await uploadToCloudinary(reel.videoUrl, 'reel-videos')
+
+    if (!thumbnailUpload.success || !videoUpload.success) {
+      return NextResponse.json({ success: false, message: "Failed to upload media"}, {status: 500})
+    }
+
     const newReel = await Reellinks.create({
       inputUrl: reel.inputUrl,
       reelId: reel.id,
@@ -56,8 +86,8 @@ export async function POST(request) {
 
       caption: reel.caption,
       hashtags: reel.hashtags,
-      thumbnail: reel.displayUrl,
-      videoUrl: reel.videoUrl,
+      thumbnail: thumbnailUpload.url,
+      videoUrl: videoUpload.url,
       duration: reel.videoDuration,
       likesCount: reel.likesCount,
       commentsCount: reel.commentsCount,

@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import Image from 'next/image'
 import { Calendar as CalendarIcon } from 'lucide-react';
-import { set } from 'mongoose'
 
 const ProfileClient = () => {
 

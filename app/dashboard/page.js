@@ -101,14 +101,7 @@ const Dashboard = () => {
                 linksData.map((link, index) => {
                   return (
                     <div key={index}>
-                      <video src={link.videoUrl ? link.videoUrl : "/dummy-video.mp4"}
-                      onError={(e) => e.target.src = "/dummy-video.mp4"}
-                      height={600} width={360}
-                      loop muted 
-                      className='rounded-lg '
-                      onMouseEnter={(e) => e.target.play()}
-                      onMouseLeave={(e) => {e.target.pause(); e.target.currentTime = 0;}}
-                      />
+                      
                     </div>
                   )
                 })
