@@ -3,16 +3,20 @@ import React from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import * as motion from "motion/react-client"
 
 const Navbar = () => {
     const { data: session } = useSession()
     const [isopen, setIsopen] = useState(false)
     const [profileImage, setProfileImage] = useState("")
+    const dropdownRef = useRef(null)
+    const ignoreNextClick = useRef(false)
     
-    const toggledropdown = () => {
-        setIsopen(!isopen)
+    const toggledropdown = (e) => {
+        e.stopPropagation()
+        ignoreNextClick.current = true
+            setIsopen((prev) => !prev)
     }
 
     useEffect(() => {
@@ -31,10 +35,30 @@ const Navbar = () => {
         setProfileImage(session?.user?.image || "")
       }
     }
-
     if (session?.user?.email) {
       fetchUserFromDB()
     }
+
+    const handleOutsideClick = (e) => {
+        if (ignoreNextClick.current) {
+            ignoreNextClick.current = false
+            return;
+        }
+        
+        if(dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+            setIsopen(false)
+        }
+    }
+
+        document.addEventListener('mousedown', handleOutsideClick)
+        document.addEventListener('scroll', handleOutsideClick)
+        document.addEventListener('touchstart', handleOutsideClick)
+    return () => {
+        document.removeEventListener('mousedown', handleOutsideClick)
+        document.removeEventListener('touchstart', handleOutsideClick)
+        document.removeEventListener('scroll', handleOutsideClick)
+    }
+
   }, [session])
     
 
@@ -60,12 +84,12 @@ const Navbar = () => {
                 <Link href={"/about"} className='relative text-white hover:text-white transition-all ease-in before:transition-[width] before:ease-in before:duration-200 before:absolute before:bg-white before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in after:duration-200 after:absolute after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]'>
                     <span className='font-semibold'>About Us</span>
                 </Link>
-                {session?.user && <div className="image flex justify-center items-center">
+                {session?.user && <div className="image flex justify-center items-center relative">
                     <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="   picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
-                    <motion.svg animate={{rotate: isopen? 180:0}} width="40" height="40" viewBox="0 0 24 24" className="cursor-pointer" onClick={toggledropdown} fill="none">
+                    <motion.svg animate={{rotate: isopen? 180:0}} width="40" height="40" viewBox="0 0 24 24" className="cursor-pointer pointer-events-auto" onClick={toggledropdown} fill="none">
                         <path d="M7 10L12 15L17 10H7Z" fill="currentColor" />
                     </motion.svg>
-                    {isopen && <motion.ul initial={{opacity: 0, scale: 0}} whileInView={{opacity: 1, scale: 1}} className=' cursor-pointer absolute top-15 right-20 bg-black text-white px-2 py-4 rounded-md'>
+                    {isopen && <motion.ul initial={{opacity: 0, scale: 0}} whileInView={{opacity: 1, scale: 1}} ref={dropdownRef} className=' cursor-pointer absolute top-15 right-20 bg-black text-white px-2 py-4 rounded-md'>
                         <li className='cursor-pointer' onClick={() => {signOut()}}>Log Out</li> <hr />
                         <li><Link href={'/profile'}>Profile</Link></li>
                     </motion.ul>}
