@@ -30,12 +30,6 @@ A sleek and personalized web app to organize and manage your favorite Instagram 
 
 ---
 
-## 📸 Screenshots
-
-*(Add screenshots of your Dashboard, Profile page, Filter system, etc.)*
-
----
-
 ## 🔧 Local Setup
 
 ### 1. Clone the Repo
