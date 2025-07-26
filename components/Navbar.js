@@ -1,23 +1,13 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession, signOut, signIn } from 'next-auth/react'
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
-import * as motion from "motion/react-client"
+import { useState, useEffect} from 'react'
 
 const Navbar = () => {
     const { data: session } = useSession()
-    const [isopen, setIsopen] = useState(false)
     const [profileImage, setProfileImage] = useState("")
-    const dropdownRef = useRef(null)
-    const ignoreNextClick = useRef(false)
-    
-    const toggledropdown = (e) => {
-        e.stopPropagation()
-        ignoreNextClick.current = true
-            setIsopen((prev) => !prev)
-    }
 
     useEffect(() => {
     const fetchUserFromDB = async () => {
@@ -39,31 +29,11 @@ const Navbar = () => {
       fetchUserFromDB()
     }
 
-    const handleOutsideClick = (e) => {
-        if (ignoreNextClick.current) {
-            ignoreNextClick.current = false
-            return;
-        }
-        
-        if(dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-            setIsopen(false)
-        }
-    }
-
-        document.addEventListener('mousedown', handleOutsideClick)
-        document.addEventListener('scroll', handleOutsideClick)
-        document.addEventListener('touchstart', handleOutsideClick)
-    return () => {
-        document.removeEventListener('mousedown', handleOutsideClick)
-        document.removeEventListener('touchstart', handleOutsideClick)
-        document.removeEventListener('scroll', handleOutsideClick)
-    }
-
   }, [session])
     
 
     return (
-        <div className='bg-black text-white flex items-center justify-between p-4 px-20 sticky top-0 z-50'>
+        <navbar className='bg-black text-white flex items-center justify-between p-4 px-20 sticky top-0 z-50 h-[7.8vh]'>
             <Link href={"/"}><div className="logo flex items-center justify-between">
                 <span className='text-2xl font-bold'>Reels</span>&nbsp;
                 <span className='text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] font-bold text-2xl'>Organizer</span>
@@ -84,15 +54,9 @@ const Navbar = () => {
                 <Link href={"/about"} className='relative text-white hover:text-white transition-all ease-in before:transition-[width] before:ease-in before:duration-200 before:absolute before:bg-white before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in after:duration-200 after:absolute after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]'>
                     <span className='font-semibold'>About Us</span>
                 </Link>
-                {session?.user && <div className="image flex justify-center items-center relative">
-                    <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="   picture" className='rounded-full hover:p-0.5 hover:bg-white transition-all ease-in duration-100 cursor-pointer' />
-                    <motion.svg animate={{rotate: isopen? 180:0}} width="40" height="40" viewBox="0 0 24 24" className="cursor-pointer pointer-events-auto" onClick={toggledropdown} fill="none">
-                        <path d="M7 10L12 15L17 10H7Z" fill="currentColor" />
-                    </motion.svg>
-                    {isopen && <motion.ul initial={{opacity: 0, scale: 0}} whileInView={{opacity: 1, scale: 1}} ref={dropdownRef} className=' cursor-pointer absolute top-15 right-20 bg-black text-white px-2 py-4 rounded-md'>
-                        <li className='cursor-pointer' onClick={() => {signOut()}}>Log Out</li> <hr />
-                        <li><Link href={'/profile'}>Profile</Link></li>
-                    </motion.ul>}
+                {session?.user && <div className="image flex justify-center items-center relative p-1 bg-neutral-700 rounded-full group hover:gap-1 w-12 hover:w-33 transform transition-all duration-300">
+                    <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="picture" className='rounded-full hover:p-0.5 hover:bg-white group-hover:-transl ate-x-15 transition-all ease-in duration-300 cursor-pointer' />
+                    <button className='group-hover:px-2 font-medium group-hover:opacity-100 opacity-0 transform transition-all duration-300 overflow-hidden cursor-pointer' onClick={() => {signOut()}}>LOGOUT</button>
                 </div>
                 }
                 {!session &&
@@ -106,7 +70,7 @@ const Navbar = () => {
                     </div>
                 }
             </div>
-        </div>
+        </navbar>
     )
 }
 
