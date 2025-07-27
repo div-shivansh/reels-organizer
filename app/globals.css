@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+}

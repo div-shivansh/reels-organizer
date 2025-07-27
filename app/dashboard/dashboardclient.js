@@ -13,12 +13,31 @@ const Dashboard = () => {
   const [userData, setUserData] = useState(null)
   const [linksData, setLinksData] = useState([])
   const [filteredreels, setFilteredreels] = useState([])
+  const [search, setSearch] = useState('')
   const searchParams = useSearchParams()
   const filter = searchParams.get('filter') || 'all'
 
   const handlefilter = ({tag}) => {
     router.push(`/dashboard?filter=${tag}`)
   }
+  const handleResetfilter = () => {
+    router.push('/dashboard')
+  }
+
+  useEffect(() => {
+      if (search.trim() === '') {
+        setFilteredreels(linksData)
+      } else {
+        const searchlower = search.toLowerCase()
+        const filteredreels = linksData.filter(link =>
+          link.caption.toLowerCase().includes(searchlower) ||
+          link.hashtags?.some(hashtags => hashtags.toLowerCase().includes(searchlower)) ||
+          link.owner.username.toLowerCase().includes(searchlower) ||
+          link.owner.fullName.toLowerCase().includes(searchlower)
+        )
+        setFilteredreels(filteredreels)
+      }
+    }, [search, linksData])
 
 
   const handleDownload = async (e) => {
@@ -81,10 +100,10 @@ const Dashboard = () => {
    if (filter === 'all') {
      setFilteredreels(linksData)
    } else {
-     const filtered = linksData.filter(link =>
-       link.tags?.some(tag => tag.toLowerCase().includes(filter))
+     const filteredreels = linksData.filter(link =>
+       link.hashtags?.some(hashtags => hashtags.toLowerCase().includes(filter))
       )
-      setFilteredreels(filtered)
+      setFilteredreels(filteredreels)
    }
  }, [filter, linksData])
 
@@ -111,7 +130,7 @@ const Dashboard = () => {
           </Link>
         </div>
         <div className='mt-3'>
-          <h2 className='text-2xl font-bold'>Categories</h2>
+          <h2 className='text-2xl font-bold cursor-pointer' onClick={handleResetfilter}>Categories</h2>
           <ul className='flex flex-col gap-2 mt-4'>
             {userData?.tags?.map((tag, index) => {
               return (
@@ -127,15 +146,15 @@ const Dashboard = () => {
           <h1 className='text-3xl font-bold'>
             {{ male: "Hello Bro!", female: "Hello Sweetie!", other: "Hello there!" }[userData?.gender] || "Hello User!"}
           </h1>
-          <input type="text" placeholder='Search...' className='bg-neutral-700 focus:outline-2 focus:outline-green-400 placeholder:text-white p-1 px-3 rounded-lg' />
+          <input type="text" placeholder='Search...' onChange={(e) => setSearch(e.target.value)} value={search} className='bg-neutral-700 focus:outline-2 focus:outline-green-400 placeholder:text-white p-1 px-3 rounded-lg' />
         </div>
         <div className="content">
           <h2 className='text-2xl font-bold'>Your Links</h2>
-          <div className='grid grid-cols-4 gap-4 mt-4 h-[70vh] overflow-auto'>
+          <div className='grid grid-cols-5 justify-center items-center gap-4 mt-4 overflow-auto'>
             {filteredreels && filteredreels.length > 0 ? (
               filteredreels.map((link, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} className='flex justify-center items-center w-full'>
                     <div className='flex flex-col items-center justify-center bg-neutral-700 p-2 w-[250px] rounded-2xl drop-shadow-xl h-[500px] hover:-translate-y-1 transition-all duration-150 ease-in-out m-2'>
                       <Image src={link.thumbnail} width={250} height={400} className='rounded-2xl' alt='thumbnail' />
                       <p className='text-wrap overflow-hidden' title={link.caption}>{link.caption}</p>

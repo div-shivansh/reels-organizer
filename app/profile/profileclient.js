@@ -138,10 +138,7 @@ const ProfileClient = () => {
     }
 
     return (
-        <div className="relative min-h-[86vh] text-white">
-
-            <div className="absolute inset-0">
-                <div className="absolute inset-0 -z-10 w-full h-auto bg-neutral-900 bg-[radial-gradient(#3d3d3d_0.5px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div className="min-h-[86vh] text-white bg-neutral-800">
                 <h1 className='text-4xl font-bold text-start px-45 pt-5'>Edit Profile</h1>
                 <form className='flex items-start justify-center flex-col container mx-auto p-5 gap-10' onSubmit={submit}>
                     <div className='flex flex-col gap-2'>
@@ -247,7 +244,6 @@ const ProfileClient = () => {
 
                 </form>
             </div>
-        </div>
     )
 }
 

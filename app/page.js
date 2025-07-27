@@ -40,7 +40,7 @@ export default function Home() {
           </div>
         </div>
         <div className="right w-full flex items-center justify-center">
-          <Image src={"/Landing.png"} width={2000} height={2000} alt="banner" className="h-[85vh] w-auto" />
+          <Image src={"/Landing.png"} priority width={855} height={744} alt="banner" className="h-[85vh] w-auto" />
         </div>
       </section>
     </main>
