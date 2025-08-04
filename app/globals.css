@@ -7,3 +7,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
   right: 10px;
 }
+
+html, body {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7.8vh;
+}
+
+.gradient-bg {
+  background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
+}

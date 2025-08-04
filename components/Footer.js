@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='bg-black text-white flex items-center justify-center py-4 h-[6.2vh]'>
+    <footer className='bg-black text-white flex items-center justify-center py-4 h-[6.2vh] sticky bottom-0'>
       <span>&copy; 2025 Reels Organizer. All Rights Reserved. </span>
     </footer>
   )
