@@ -16,3 +16,20 @@ html, body {
 .gradient-bg {
   background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
+  border-radius: 10px;
+  cursor: pointer;
+}
