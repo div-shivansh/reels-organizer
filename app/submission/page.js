@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -11,11 +11,16 @@ const Submission = () => {
     const { data: session } = useSession()
     const router = useRouter()
 
-
+    useEffect(() => {
     if (!session) {
-        router.push("/login")
-        return null
+      router.push("/login")
     }
+  }, [session])
+
+  if (!session) {
+    return null
+  }
+
 
     const handleSubmitReel = async () => {
         setLoading(true)

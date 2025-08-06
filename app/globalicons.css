@@ -15,12 +15,27 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.icon-sm {
-  font-size: 16px;
+.icon {
+  font-size: 40px;
 }
-.icon-md {
-  font-size: 24px;
+
+@media screen and (min-width: 1024px) {
+  .icon {
+    font-size: 50px
+  }
 }
-.icon-lg {
-  font-size: 36px;
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .icon {
+    font-size: 36px;
+  }
+}
+@media screen and (min-width: 425px) and (max-width: 767px) {
+  .icon {
+    font-size: 25px
+  }
+}
+@media screen and (min-width: 0px) and (max-width: 424px) {
+  .icon {
+    font-size: 20px
+  }
 }
