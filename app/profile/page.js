@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ProfileClient from './profileclient';
+import ProfileClient from './edit/profileclient';
 import ProfileUser from './profileuser';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';

@@ -25,7 +25,7 @@ const Footer = () => {
           return (
             <Link key={href} href={href} className={`flex items-center justify-center flex-col ${isActive ? 'bg-white text-black rounded-xl p-0.5 sm:px-4 px-2' : 'text-white'}`}>
               <span className='material-symbols-outlined icon'>{icon}</span>
-              <span className='sm:text-xs sm:font-extralight'>{name}</span>
+              <span className='sm:text-xl xs:text-lg 3xs:text-sm 3xs:font-light'>{name}</span>
             </Link>
           )
         })}

@@ -10,7 +10,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 html, body {
   scroll-behavior: smooth;
-  scroll-padding-top: 7.8vh;
+  scroll-padding-top: 72px;
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+  html, body {
+    scroll-padding-top: 0px;
+  }
 }
 
 .gradient-bg {
@@ -32,4 +38,10 @@ html, body {
   background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
   border-radius: 10px;
   cursor: pointer;
+}
+
+@theme {
+  --breakpoint-3xs: 310px;
+  --breakpoint-2xs: 375px;
+  --breakpoint-xs: 425px;
 }

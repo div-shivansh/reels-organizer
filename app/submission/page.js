@@ -59,17 +59,17 @@ const Submission = () => {
     return (
         <div className="flex flex-col justify-center gap-10 items-center bg-neutral-800 min-h-[86vh] text-white px-5 md:px-20 lg:px-0">
             <div className='flex flex-col items-center justify-center container w-full gap-2 mt-5'>
-                <h1 className='lg:text-7xl md:text-6xl text-4xl  font-semibold lg:font-bold'>Submit Your Reels</h1>
-                <h2 className='lg:text-2xl md:text-xl sm:text-lg text-md text-neutral-400 text-center'>Paste the links to your favourite Instagram Reels to get them organized.</h2>
+                <h1 className='lg:text-7xl md:text-6xl sm:text-4xl text-3xl text-center font-semibold lg:font-bold'>Submit Your Reels</h1>
+                <h2 className='lg:text-2xl md:text-xl sm:text-lg 2xs:text-base text-sm text-neutral-400 text-center'>Paste the links to your favourite Instagram Reels to get them organized.</h2>
             </div>
             <div className='flex flex-col items-center justify-center bg-neutral-700 px-5 md:px-15 md:py-20 py-15 rounded-2xl border border-neutral-500 my-10 drop-shadow-2xl gap-5 w-full lg:w-1/2'>
                 <div className='flex justify-center items-center w-full'>
                     <span className='material-symbols-outlined border-2 border-white md:p-2.5 px-1 py-2.5 rounded-lg rounded-r-none border-r-0'>mail</span>
-                    <input value={session.user.email} readOnly className='bg-transparent border-2 border-l-0 outline-none border-white md:px-2 px-1 py-2 rounded-lg rounded-l-none text-neutral-500 w-full text-xl' type="email" />
+                    <input value={session.user.email} readOnly className='bg-transparent border-2 border-l-0 outline-none border-white md:px-2 px-1 2xs:py-2 py-2.5 rounded-lg rounded-l-none text-neutral-500 w-full sm:text-xl 2xs:text-lg text-base' type="email" />
                 </div>
                 <div className='flex justify-center items-center w-full'>
                     <span className='material-symbols-outlined border-2 border-white md:p-2.5 px-1 py-2.5 rounded-lg rounded-r-none border-r-0'>link</span>
-                    <input value={url} onChange={(e) => setUrl(e.target.value)} className='bg-transparent border-2 outline-none border-l-0 placeholder:text-neutral-300 border-white md:px-2 px-1 py-2 rounded-lg rounded-l-none w-full text-xl' type="url" placeholder='Enter your Reel URL' />
+                    <input value={url} onChange={(e) => setUrl(e.target.value)} className='bg-transparent border-2 outline-none border-l-0 placeholder:text-neutral-300 border-white md:px-2 px-1 2xs:py-2 py-2.5 rounded-lg rounded-l-none w-full sm:text-xl 2xs:text-lg text-base' type="url" placeholder='Enter your Reel URL' />
                 </div>
                 {loading ? (
                     <div className='text-neutral-500 border-white rounded-full border-2 py-1.5 px-10'>Submitting...</div>

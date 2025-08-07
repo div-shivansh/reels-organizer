@@ -72,7 +72,7 @@ const ProfileUser = () => {
             <span className='text-neutral-500'>Manage your profile information</span>
           </div>
           <div className='flex items-center justify-center gap-5'>
-            <button className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center cursor-pointer transition-all duration-300 border-2 bg-transparent border-white text-white hover:bg-white">
+            <button onClick={() => {router.push("/profile/edit")}} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center cursor-pointer transition-all duration-300 border-2 bg-transparent border-white text-white hover:bg-white">
               <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Edit Profile</span>
               <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
                 <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Edit Profile</span>
@@ -94,7 +94,7 @@ const ProfileUser = () => {
             <div className='relative'>
               <svg className="rotate-[-90deg] w-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-gray-200 dark:text-neutral-700" strokeWidth="0.5" strokeLinecap="round"></circle>
-                <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-green-400" strokeWidth="0.5" strokeDasharray={`${count * 10} 100`} strokeLinecap="round"></circle>
+                <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-green-400" strokeWidth="0.5" strokeDasharray={`${count * 10.05} 100`} strokeLinecap="round"></circle>
               </svg>
               <Image src={userData?.image} width={400} height={400} alt='profile' className='absolute rounded-full top-0 p-7' />
             </div>
