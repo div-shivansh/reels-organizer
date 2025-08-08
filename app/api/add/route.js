@@ -10,13 +10,19 @@ export async function POST(request) {
 
         const existUser = await Credentials.findOne({email: body.email});
 
+        
         if(existUser) {
+            const updateUser = await Credentials.findOneAndUpdate(
+                {email: body.email},
+                {$set: {...body}},
+                {new: true}
+        )
             return Response.json({
-                success: false,
-                error: true,
-                message: "user already exists",
-                result: null
-            }, {status: 409})
+                success: true,
+                error: false,
+                message: "User updated successfully",
+                result: updateUser
+            }, {status: 200})
         }
 
         const newUser = await Credentials.create({

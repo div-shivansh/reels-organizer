@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import { Calendar as CalendarIcon } from 'lucide-react';
 
-const ProfileClient = ({userData: actualdata}) => {
+const ProfileClient = ({ userData: actualdata }) => {
 
     const router = useRouter()
     const { data: session, status } = useSession()
@@ -30,7 +30,7 @@ const ProfileClient = ({userData: actualdata}) => {
         if (status === 'unauthenticated') {
             router.push("/login")
         }
-        
+
         if (actualdata) {
             setHandle(actualdata.handle || "")
             setNumber(actualdata.number || "")
@@ -149,14 +149,14 @@ const ProfileClient = ({userData: actualdata}) => {
     }
 
     return (
-        <div className="min-h-[86vh] text-white bg-neutral-800">
-            <h1 className='text-4xl font-bold text-start px-45 pt-5'>Edit Profile</h1>
-            <form className='flex items-start justify-center flex-col container mx-auto p-5 gap-10' onSubmit={submit}>
-                <div className='flex flex-col gap-2'>
-                    <h3 className='text-2xl font-bold text-start'>Profile picture</h3>
-                    <div className='img flex items-center justify-center gap-7'>
-                        <Image src={uploadedUrl || session.user.image} width={100} height={100} alt='profile' priority className='size-25 object-cover rounded-full selection:bg-transparent hover:opacity-90 transition-all duration-150' />
-                        <div className='flex flex-col items-start justify-center gap-3'>
+        <div className="min-h-[86vh] text-white bg-neutral-900">
+            <form className='flex items-start justify-center flex-col lg:container lg:mx-auto w-full p-5 gap-10' onSubmit={submit}>
+            <h1 className='text-4xl font-bold text-start pt-5 '>Edit Profile</h1>
+                <div className='flex flex-col gap-5 xs:bg-neutral-800 w-full xs:items-start items-center justify-center xs:px-10 py-5 rounded-2xl drop-shadow-xl'>
+                    <h3 className='xs:text-3xl text-2xl font-semibold text-start'>Profile Picture</h3>
+                    <div className='img flex max-xs:flex-col items-center justify-center gap-7'>
+                        <Image src={uploadedUrl || session.user.image} width={120} height={120} alt='profile' priority className='xs:size-30 size-20 object-cover rounded-full selection:bg-transparent hover:opacity-90 transition-all duration-150' />
+                        <div className='flex flex-col xs:items-start justify-center gap-3'>
                             <label htmlFor="filechose" className='button group relative inline-flex justify-center overflow-hidden whitespace-nowrap cursor-pointer rounded-full px-6 py-1 text-center transition-all duration-300 border border-transparent bg-transparent text-white hover:bg-white hover:text-black outline-2 outline-white outline-offset-2'>
                                 <span className='button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold'>Upload Photo</span>
                                 <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0"><span className="button-type font-semibold">Upload Photo</span></div>
@@ -166,93 +166,92 @@ const ProfileClient = ({userData: actualdata}) => {
                         </div>
                     </div>
                 </div>
-                <div className='flex items-start justify-between w-full'>
-                    <section className="basic flex items-start justify-center flex-col gap-5 w-5/12">
-                        <h2 className='text-2xl font-bold mb-4'>Basic Information</h2>
+                <div className='flex items-start max-lg:flex-col gap-10 lg:justify-between justify-center w-full xs:bg-neutral-800 xs:px-10 py-5 lg:gap-15 rounded-2xl drop-shadow-xl'>
+                    <section className="basic flex items-start justify-center flex-col gap-5 w-full">
+                        <h2 className='xs:text-3xl text-2xl font-semibold mb-4'>Basic Information</h2>
                         <div className='flex gap-3 flex-col w-full'>
-                            <h3 className='text-lg font-semibold text-start'>Display Name<span className='text-red-500'>&#42;</span></h3>
-                            <div className='flex gap-4 w-full'>
-                                <input value={fname} onChange={(e) => setFname(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg w-full' type="text" placeholder='First Name' />
-                                <input value={lname} onChange={(e) => setLname(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg w-full' type="text" placeholder='Last Name' />
+                            <h3 className='text-lg font-medium text-start'>Display Name<span className='text-red-500'>&#42;</span></h3>
+                            <div className='flex md:gap-15 xs:gap-5 gap-2 w-full'>
+                                <input value={fname} onChange={(e) => setFname(e.target.value)} className='bg-transparent xs:text-lg text-base outline outline-white p-2 rounded-lg w-full' type="text" placeholder='First Name' />
+                                <input value={lname} onChange={(e) => setLname(e.target.value)} className='bg-transparent xs:text-lg text-base outline outline-white p-2 rounded-lg w-full' type="text" placeholder='Last Name' />
                             </div>
                         </div>
-                        <div className='flex gap-4 w-full'>
-                            <div className='flex gap-3 flex-col w-full'>
-                                <h3 className='text-lg font-semibold text-start'>Email <span className='text-red-500'>&#42;</span></h3>
-                                <input readOnly value={session.user.email} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg text-gray-500' type="email" placeholder='Enter Email' />
-                            </div>
-                            <div className='flex gap-3 flex-col w-full'>
-                                <h3 className='text-lg font-semibold text-start'>Username<span className='text-red-500'>&#42;</span></h3>
-                                <input value={username} onChange={(e) => setUsername(e.target.value)} className='bg-transparent outline-2 outline-white px-2 py-1 rounded-lg' type="text" placeholder='Enter Username' />
-                            </div>
+                        <div className='flex gap-3 flex-col w-full'>
+                            <h3 className='text-lg font-medium text-start'>Email <span className='text-red-500'>&#42;</span></h3>
+                            <input readOnly value={session.user.email} className='bg-transparent outline outline-white p-2 xs:text-lg text-base rounded-lg text-gray-500' type="email" placeholder='Enter Email' />
                         </div>
-                        <div className='w-full flex gap-4'>
+                        <div className='flex w-full max-md:flex-col md:gap-15 gap-5'>
                             <div className='flex gap-3 flex-col w-full'>
-                                <h3 className='text-lg font-semibold text-start'>Date of Birth</h3>
-                                <div className="relative">
-                                    <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="bg-transparent outline-2 outline-white px-2 py-1 rounded-lg w-full pr-10" />
-                                    <span className="absolute right-3 top-2 text-white pointer-events-none">
+                                <h3 className='text-lg font-medium text-start'>Username<span className='text-red-500'>&#42;</span></h3>
+                                <input value={username} onChange={(e) => setUsername(e.target.value)} className='bg-transparent outline xs:text-lg text-base outline-white p-2 rounded-lg' type="text" placeholder='Enter Username' />
+                            </div>
+                            <div className='flex gap-3 flex-col w-full'>
+                                <h3 className='text-lg font-medium text-start'>Date of Birth</h3>
+                                <div className="relative items-center justify-center">
+                                    <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="bg-transparent outline xs:text-lg text-base outline-white p-2 rounded-lg w-full pr-10" />
+                                    <span className="absolute right-3 top-3 flex items-center justify-center text-white pointer-events-none">
                                         <CalendarIcon className="w-5 h-5" />
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div className='w-full flex gap-4'>
                             <div className='flex gap-3 flex-col w-full'>
-                                <h3 className='text-lg font-semibold text-start'>Gender</h3>
-                                <select value={gender} onChange={(e) => setGender(e.target.value)} className="bg-transparent outline-2 outline-white px-2 py-1 rounded-lg text-zinc-500">
-                                    <option value="">Select your Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                    <option value="prefer_not">Prefer not to say</option>
+                                <h3 className='text-lg font-medium text-start'>Gender</h3>
+                                <select value={gender} onChange={(e) => setGender(e.target.value)} className="bg-transparent xs:text-lg text-base outline outline-white p-2 rounded-lg text-white">
+                                    <option value="" className='text-white bg-neutral-600'>Select your Gender</option>
+                                    <option value="male" className='text-white bg-neutral-600 '>Male</option>
+                                    <option value="female" className='text-white bg-neutral-600 '>Female</option>
+                                    <option value="other" className='text-white bg-neutral-600 '>Other</option>
+                                    <option value="prefer_not" className='text-white bg-neutral-600 '>Prefer not to say</option>
                                 </select>
                             </div>
                         </div>
-                        <button type='submit' className="button group relative inline-flex justify-center mt-15 overflow-hidden whitespace-nowrap rounded-full cursor-pointer px-10 py-1.5 text-center transition-all duration-300 outline-2 outline-offset-2 outline-white bg-transparent text-white hover:bg-white ">
+                    </section>
+                    <section className="other flex items-start justify-center flex-col gap-5 w-full">
+                        <h2 className='xs:text-3xl text-2xl font-semibold mb-4'>More about you</h2>
+                        <div className='flex flex-col gap-3 w-full'>
+                            <h3 className='text-lg font-medium text-start'>Instagram handle</h3>
+                            <div className='flex w-full'>
+                                <input type="text" className='bg-transparent border border-r-0 w-7 placeholder:text-white rounded-r-none xs:text-lg text-base outline-none border-white pl-1 py-2 rounded-lg placeholder:' placeholder='@' readOnly />
+                                <input value={handle} onChange={(e) => setHandle(e.target.value)} className='bg-transparent border xs:text-lg text-base border-l-0 outline-none rounded-l-none border-white pr-1.5 py-2 rounded-lg w-full' type="text" />
+                            </div>
+                        </div>
+                        <div className='flex flex-col gap-1 w-full'>
+                            <h3 className='text-lg font-medium text-start'>WhatsApp No.</h3>
+                            <div className='flex w-full'>
+                                <input type="text" className='bg-transparent border border-r-0 w-10 placeholder:text-white xs:text-lg text-base rounded-r-none outline-none border-white pl-2 py-2 rounded-lg placeholder:' placeholder='+91' readOnly />
+                                <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent border border-l-0 outline-none rounded-l-none border-white pr-3 py-2 rounded-lg xs:text-lg text-base w-full' type="number" />
+                            </div>
+                            <span className='xs:text-sm text-xs text-gray-400 '>NOTE:- For Updates and some Chit chat :&#41; </span>
+                        </div>
+                        <div className='flex flex-col gap-3 w-full'>
+                            <label className="text-lg font-medium">Interests</label>
+                            <div className="flex flex-wrap gap-2 bg-transparent outline outline-white px-3 min-h-25 overflow-auto py-2 rounded-lg">
+                                {tags.map((tag, index) => (
+                                    <div key={index} className="flex items-center gap-1.5 bg-transparent text-white outline outline-white hover:outline-none hover:bg-white hover:text-black transition-all ease-in duration-150 cursor-default px-3 rounded-full xs:text-lg text-base">
+                                        <span>{tag}</span>
+                                        <button type="button" className="text-red-600 hover:text-red-800 font-semibold cursor-pointer" onClick={() => removeTag(index)}>
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} className="bg-transparent outline-none flex-grow w-full text-white xs:placeholder:text-lg placeholder:text-base xs:text-lg text-base" placeholder="Press Space to add"
+                                />
+                            </div>
+                        </div>
+                        <h3 className='text-lg font-medium text-start'>Bio&#40;About yourself&#41;</h3>
+                        <textarea value={bio} onChange={(e) => setBio(e.target.value)} className='bg-transparent outline outline-white px-3 py-2 xs:text-lg text-base xs:placeholder:text-lg placeholder:text-base rounded-lg w-full min-h-32' type="text" placeholder='Something about yourself. If you are creative enough'></textarea>
+                    </section>
+                </div>
+                <div className='w-full lg:justify-end justify-center flex px-10'>
+                        <button type='submit' className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full cursor-pointer max-lg:w-full px-10 py-1.5 text-center transition-all duration-300 outline-2 outline-offset-2 outline-white bg-transparent text-white hover:bg-white ">
                             <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Submit</span>
                             <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
                                 <span className="button-type font-semibold text-black">Submit</span>
                             </div>
                         </button>
-                    </section>
-                    <section className="other flex items-start justify-center flex-col gap-5 w-5/12">
-                        <h2 className='text-2xl font-bold mb-4'>More about you</h2>
-                        <div className='flex gap-4 w-full'>
-                            <div className='flex flex-col gap-3 w-full'>
-                                <h3 className='text-lg font-semibold text-start'>Instagram handle</h3>
-                                <div className='flex w-full'>
-                                    <input type="text" className='bg-transparent border-2 border-r-0 w-7 placeholder:text-white rounded-r-none outline-none border-white pl-2 py-1 rounded-lg placeholder:' placeholder='@' readOnly />
-                                    <input value={handle} onChange={(e) => setHandle(e.target.value)} className='bg-transparent border-2 border-l-0 outline-none rounded-l-none border-white pr-2 py-1 rounded-lg w-full' type="text" />
-                                </div>
-                            </div>
-                            <div className='flex flex-col gap-3 w-full'>
-                                <h3 className='text-lg font-semibold text-start'>WhatsApp No.</h3>
-                                <div className='flex w-full'>
-                                    <input type="text" className='bg-transparent border-2 border-r-0 w-10 placeholder:text-white rounded-r-none outline-none border-white pl-2 py-1 rounded-lg placeholder:' placeholder='+91' readOnly />
-                                    <input value={number} onChange={(e) => setNumber(e.target.value)} className='bg-transparent border-2 border-l-0 outline-none rounded-l-none border-white pr-2 py-1 rounded-lg w-full' type="number" />
-                                </div>
-                            </div>
-                        </div>
-                        <span className='text-sm text-gray-400 mt-[-16]'>NOTE:- For Updates and some Chit chat :&#41; </span>
-                        <div className="w-full">
-                            <label className="text-lg font-semibold">Interests</label>
-                            <div className="flex flex-wrap gap-2 bg-transparent outline-2 outline-white px-3 max-h-25 overflow-auto py-2 rounded-lg">
-                                {tags.map((tag, index) => (
-                                    <div key={index} className="flex items-center gap-1.5 bg-transparent text-white outline outline-white hover:outline-none hover:bg-white hover:text-black transition-all ease-in duration-150 cursor-default px-3 py-1 rounded-full text-sm">
-                                        <span>{tag}</span>
-                                        <button type="button" className="text-red-600 hover:text-red-800 font-bold cursor-pointer" onClick={() => removeTag(index)}>
-                                            &times;
-                                        </button>
-                                    </div>
-                                ))}
-                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} className="bg-transparent outline-none flex-grow w-full text-white" placeholder="Press Enter to add"
-                                />
-                            </div>
-                        </div>
-                        <h3 className='text-lg font-semibold text-start'>Bio&#40;About yourself&#41;</h3>
-                        <textarea value={bio} onChange={(e) => setBio(e.target.value)} className='bg-transparent outline-2 outline-white px-3 py-2 rounded-lg w-full min-h-32' type="text" placeholder='Something about yourself. If you are creative enough'></textarea>
-                    </section>
                 </div>
-
             </form>
         </div>
     )
