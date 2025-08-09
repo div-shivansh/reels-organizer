@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+
 
 const Submission = () => {
 
@@ -12,14 +14,15 @@ const Submission = () => {
     const router = useRouter()
 
     useEffect(() => {
-    if (!session) {
-      router.push("/login")
-    }
-  }, [session])
+        if (!session) {
+            router.push("/login")
+        }
+    }, [session])
 
-  if (!session) {
-    return null
-  }
+    if (!session) {
+        return null
+    }
+
 
 
     const handleSubmitReel = async () => {
@@ -43,13 +46,30 @@ const Submission = () => {
             const r = await fetch("/api/submit", requestOptions)
             const res = await r.json()
             if (res.success) {
-                alert("Your Reel has been submitted successfully!")
+                toast.success('Reel has been submitted successfully', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
                 setUrl("")
             }
 
         } catch (error) {
-            console.error("error submitting reel:", error)
-            alert("submission failed")
+            toast.error('Something went wrong. Try again later', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } finally {
             setLoading(false)
         }

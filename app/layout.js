@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionWrapper from "@/components/sessionWrapper";
 import "./globalicons.css"
+import { ToastContainer } from "react-toastify";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -26,6 +27,20 @@ export default function RootLayout({ children }) {
         {children}
         <Footer/>
         </SessionWrapper>
+
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
+
       </body>
     </html>
   );

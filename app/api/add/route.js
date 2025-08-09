@@ -7,6 +7,15 @@ export async function POST(request) {
         const body = await request.json();
 
         console.log("Incoming body:", body)
+        
+        if (!body.email || !body.username || !body.fname) {
+            return Response.json({
+                success: false,
+                error: true,
+                message: "Email, Username and First name is required",
+                result: null,
+            }, {status: 400})
+        }
 
         const existUser = await Credentials.findOne({email: body.email});
 
@@ -40,6 +49,17 @@ export async function POST(request) {
         }, {status: 201})
     } catch (error) {
         console.error("Error saving user:", error)
+
+        if (error.name === "ValidationError") {
+      return Response.json({
+        success: false,
+        error: true,
+        message: error.message,
+        result: null
+      }, { status: 400 });
+    }
+
+
         return Response.json({
             success: false,
             error: true,
