@@ -56,7 +56,7 @@ const ProfileClient = ({ userData: actualdata }) => {
     }, [session, status, router, actualdata])
 
     const handleKeyDown = (e) => {
-        if (e.key === " " && input.trim()) {
+        if (e.key === " " || e.code === "space" && input.trim()) {
             e.preventDefault();
             if (!tags.includes(input.trim())) {
                 setTags([...tags, input.trim()]);
@@ -91,7 +91,8 @@ const ProfileClient = ({ userData: actualdata }) => {
 
                 if (res.ok) {
                     setUploadedUrl(data.url);
-                    toast.success('Image Uploaded successfully', {
+                    console.log(data)
+                    toast.success(data.message || "Image uploaded successfully", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -102,7 +103,7 @@ const ProfileClient = ({ userData: actualdata }) => {
                         theme: "dark",
                     });
                 } else {
-                    toast.error('Some error happened while uploading the image', {
+                    toast.error(data.message || "Something happened while uploading", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -114,7 +115,7 @@ const ProfileClient = ({ userData: actualdata }) => {
                     });
                 }
             } catch (error) {
-                toast.error('Something went wrong. Please reload or try later', {
+                toast.error(error.message || "Something went wrong", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -183,7 +184,7 @@ const ProfileClient = ({ userData: actualdata }) => {
         const r = await fetch("/api/add", requestOptions)
         const result = await r.json()
         if (result.success) {
-              toast.success('Profile updated successfully', {
+              toast.success(result.message || 'Profile updated successfully', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

@@ -5,8 +5,6 @@ export async function POST(request) {
     try {
         await connectDB();
         const body = await request.json();
-
-        console.log("Incoming body:", body)
         
         if (!body.email || !body.username || !body.fname) {
             return Response.json({
@@ -29,7 +27,7 @@ export async function POST(request) {
             return Response.json({
                 success: true,
                 error: false,
-                message: "User updated successfully",
+                message: "Profile updated successfully",
                 result: updateUser
             }, {status: 200})
         }
@@ -44,7 +42,7 @@ export async function POST(request) {
         return Response.json({
             success: true,
             error: false,
-            message: "user created successfully",
+            message: "Profile created successfully",
             result: newUser
         }, {status: 201})
     } catch (error) {

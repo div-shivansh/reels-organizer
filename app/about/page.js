@@ -1,10 +1,15 @@
 "use client";
 import React from "react";
+import { motion } from "framer-motion";
 
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-neutral-900 text-white sm:px-6 px-3 py-12">
-      <div className="max-w-5xl mx-auto">
+      <motion.div
+       initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+       className="max-w-5xl mx-auto">
         <h1 className="md:text-5xl sm:text-4xl text-2xl font-bold text-center mb-10 text-white">
           About Reels Organizer
         </h1>
@@ -86,7 +91,7 @@ const AboutPage = () => {
             better, feel free to connect with me or contribute to the GitHub repository!
           </p>
         </section>
-      </div>
+      </motion.div>
     </div>
   );
 };
