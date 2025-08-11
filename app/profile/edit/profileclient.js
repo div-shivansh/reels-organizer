@@ -55,18 +55,25 @@ const ProfileClient = ({ userData: actualdata }) => {
 
     }, [session, status, router, actualdata])
 
-    const handleKeyDown = (e) => {
-        if (e.key === " " || e.code === "space" && input.trim()) {
-            e.preventDefault();
-            if (!tags.includes(input.trim())) {
-                setTags([...tags, input.trim()]);
+    const handleSpaceKey = (e) => {
+        const val = e.target.value
+        if (val.endsWith(" ")) {
+            const newTag = val.trim()
+            if(newTag && !tags.includes(newTag)) {
+                setTags([...tags, newTag])
             }
-            setInput("");
-        }
-        if (e.key === "Backspace" && !input && tags.length) {
-            setTags(tags.slice(0, -1));
+            setInput("")
+        } else{
+            setInput(val)
         }
     };
+    const handleBackKey = (e) => {
+
+        if (e.key === "Backspace" && !input && tags.length) {
+            e.preventDefault()
+            setTags(tags.slice(0, -1));
+        }
+    }
     const removeTag = (index) => {
         setTags(tags.filter((_, i) => i !== index));
     };
@@ -303,7 +310,7 @@ const ProfileClient = ({ userData: actualdata }) => {
                                         </button>
                                     </div>
                                 ))}
-                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} className="bg-transparent outline-none flex-grow w-full text-white xs:placeholder:text-lg placeholder:text-base xs:text-lg text-base" placeholder="Press Space to add"
+                                <input type="text" value={input} onChange={handleSpaceKey} onKeyDown={handleBackKey} className="bg-transparent outline-none flex-grow w-full text-white xs:placeholder:text-lg placeholder:text-base xs:text-lg text-base" placeholder="Press Space to add"
                                 />
                             </div>
                         </div>

@@ -21,6 +21,11 @@ const Dashboard = () => {
   const handlefilter = ({ tag }) => {
     router.push(`/dashboard?filter=${tag.toLowerCase()}`)
   }
+  const handleDefaultfilter = (categoryArry) => {
+   const catagoryParam = categoryArry.join("")
+   console.log(categoryArry, catagoryParam)
+   router.push(`/dashboard?filter=${catagoryParam}`)
+  }
   const handleResetfilter = () => {
     router.push('/dashboard')
   }
@@ -99,7 +104,7 @@ const Dashboard = () => {
         if (udata.success) {
           setUserData(udata.user)
         } else {
-            toast.error('Please Create a profile for better personalization', {
+            toast.warn('Please Create a profile for better personalization', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -159,6 +164,12 @@ const Dashboard = () => {
     }
   }, [filter, linksData, userData])
 
+  const defaultFilters = [
+    {name: "COMEDY", category: ["order"]},
+    {name: "COMEDY", category: ["memes"]}
+  ]
+  console.log(defaultFilters)
+
 
 
   if (status === "loading" || status === "unauthenticated") {
@@ -195,6 +206,13 @@ const Dashboard = () => {
             <h2 className='lg:text-2xl text-xl font-bold cursor-pointer' onClick={handleResetfilter}>Categories</h2>
           </div>
           <ul className='flex flex-col max-lg:flex-row w-full max-lg:overflow-x-auto lg:overflow-y-auto gap-2 lg:mt-4 mt-2'>
+            {userData?.tags?.length === 0 || !userData && defaultFilters.map((filter, index) => {
+              return (
+                <div key={index}>
+                  <h2 onClick={() => {handleDefaultfilter (filter.category)}}>Hello</h2>
+                </div>
+              )
+            })}
             {userData?.tags?.map((tag, index) => {
               return (
                 <div key={index} onClick={() => { handlefilter({ tag }) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">

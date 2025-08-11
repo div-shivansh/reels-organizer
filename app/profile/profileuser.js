@@ -193,8 +193,8 @@ const ProfileUser = () => {
             </div>
           </div>
           <div className='border border-neutral-500 rounded-4xl w-full h-full flex flex-col py-5 sm:px-10 px-2 gap-4 drop-shadow-2xl bg-neutral-800 relative'>
+            <span className='text-xs absolute top-0 left-10 text-neutral-500'><span className='text-red-500'>&#42;</span>Dummy Data</span>
             <h3 className='font-semibold text-2xl mb-5 max-sm:text-center'>Monthly Reels Stats</h3>
-            <span className='text-xs absolute -bottom-4 text-neutral-500'><span className='text-red-500'>&#42;</span>Dummy Data</span>
             <div className='flex items-center justify-evenly'>
               <div className="relative sm:size-40 size-30">
                 <svg className="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
