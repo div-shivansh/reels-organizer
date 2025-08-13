@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { lazy } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -21,10 +21,8 @@ const Dashboard = () => {
   const handlefilter = ({ tag }) => {
     router.push(`/dashboard?filter=${tag.toLowerCase()}`)
   }
-  const handleDefaultfilter = (categoryArry) => {
-   const catagoryParam = categoryArry.join("")
-   console.log(categoryArry, catagoryParam)
-   router.push(`/dashboard?filter=${catagoryParam}`)
+  const handleDefaultfilter = (secretCode) => {
+    router.push(`/dashboard?filter=${secretCode}`)
   }
   const handleResetfilter = () => {
     router.push('/dashboard')
@@ -84,16 +82,16 @@ const Dashboard = () => {
           });
         }
       } catch (err) {
-          toast.error('Please try again later', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+        toast.error('Please try again later', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     }
     const fetchUserFromDB = async () => {
@@ -104,7 +102,7 @@ const Dashboard = () => {
         if (udata.success) {
           setUserData(udata.user)
         } else {
-            toast.warn('Please Create a profile for better personalization', {
+          toast.warn('Please Create a profile for better personalization', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -117,16 +115,16 @@ const Dashboard = () => {
         }
 
       } catch (error) {
-          toast.error('Something went wrong. Please reload or try later', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+        toast.error('Something went wrong. Please reload or try later', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     }
 
@@ -143,6 +141,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const userTags = userData?.tags?.map(tag => tag.toLowerCase()) || []
+    const defaultCategory = defaultFilters?.flatMap(C => C.category).map(c => c.toLowerCase()) || []
+
 
     if (filter === 'all') {
       setFilteredreels(linksData)
@@ -151,24 +151,34 @@ const Dashboard = () => {
         const hashtags = (link.hashtags || []).map(tag => tag.toLowerCase())
 
         if (hashtags.length === 0) return true;
-
-        return !hashtags.some(tag => userTags.includes(tag))
+        else if (userTags.length > 0) {
+          return !hashtags.some(tag => userTags.includes(tag))
+        } else {
+          return !hashtags.some(c => defaultCategory.includes(c))
+        }
       })
 
       setFilteredreels(others)
     } else {
-      const filtered = linksData.filter(link =>
-        link.hashtags?.some(tag => tag.toLowerCase().includes(filter))
-      )
+      const defaultMatch = defaultFilters.find(f => f.SecretCode === filter)
+      const filtered = linksData.filter(link => {
+        const hashtags = (link.hashtags || []).map(tag => tag.toLowerCase())
+        if (defaultMatch) {
+          return defaultMatch.category.some(category =>
+            hashtags?.some(tag => tag.toLowerCase().includes(category.toLowerCase()))
+          )
+        } else {
+          return hashtags?.some(tag => tag.toLowerCase().includes(filter))
+        }
+      })
       setFilteredreels(filtered)
     }
   }, [filter, linksData, userData])
 
   const defaultFilters = [
-    {name: "COMEDY", category: ["order"]},
-    {name: "COMEDY", category: ["memes"]}
+    { name: "COMEDY", SecretCode: "rdshye", category: ["memEs", "hello"] },
+    { name: "Food", SecretCode: "dnfjef", category: ["ORder", "Restaurent"] }
   ]
-  console.log(defaultFilters)
 
 
 
@@ -192,7 +202,7 @@ const Dashboard = () => {
     <div className='bg-neutral-800 min-h-[86vh] flex max-lg:flex-col text-white p-2'>
       <div className='left lg:border-r-2 lg:border-neutral-500 md:pr-4 lg:w-[20vw] sticky'>
         <div className='flex items-center justify-center xl:gap-3 gap-1 bg-neutral-700 xl:py-2 py-1 px-1 rounded-xl drop-shadow-xl max-lg:hidden'>
-          <Image src={userData?.image || session?.user?.image || "/dummy-avatar.png"} width={60} height={60} alt='profile' className=' 2xl:size-15 lg:size-12 rounded-full hover:opacity-80 transition-all ease-in duration-100 cursor-pointer' />
+          <Image src={userData?.image || session?.user?.image || "/dummy-avatar.png"} width={60} height={60} alt='profile' priority className=' 2xl:w-15 2xl:h-auto lg:h-auto lg:w-12 rounded-full hover:opacity-80 transition-all ease-in duration-100 cursor-pointer' />
           <div className='flex flex-col items-start justify-center truncate'>
             <h3 className='2xl:text-lg lg:text-base 2xl:font-medium truncate w-full'>{userData?.fname || "Your"} {userData?.lname || "Name"}</h3>
             <h4 className='2xl:text-sm text-xs text-green-400 truncate w-full'>@{userData?.username || "username"}</h4>
@@ -206,23 +216,31 @@ const Dashboard = () => {
             <h2 className='lg:text-2xl text-xl font-bold cursor-pointer' onClick={handleResetfilter}>Categories</h2>
           </div>
           <ul className='flex flex-col max-lg:flex-row w-full max-lg:overflow-x-auto lg:overflow-y-auto gap-2 lg:mt-4 mt-2'>
-            {userData?.tags?.length === 0 || !userData && defaultFilters.map((filter, index) => {
-              return (
-                <div key={index}>
-                  <h2 onClick={() => {handleDefaultfilter (filter.category)}}>Hello</h2>
-                </div>
-              )
-            })}
-            {userData?.tags?.map((tag, index) => {
-              return (
-                <div key={index} onClick={() => { handlefilter({ tag }) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
-                  <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">{tag.toUpperCase()}</span>
-                  <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                    <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{tag.toUpperCase()}</span>
+
+            {userData && userData?.tags?.length > 0 ? (
+              userData?.tags?.map((tag, index) => {
+                return (
+                  <div key={index} onClick={() => { handlefilter({ tag }) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
+                    <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">{tag.toUpperCase()}</span>
+                    <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+                      <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{tag.toUpperCase()}</span>
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })
+            ) : (
+              defaultFilters.map((filter, index) => {
+                return (
+                  <div key={index} onClick={() => { handleDefaultfilter(filter.SecretCode) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
+                    <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">{filter.name}</span>
+                    <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+                      <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{filter.name}</span>
+                    </div>
+                  </div>
+                )
+              })
+            )
+            }
             <div onClick={handleRemains} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
               <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">OTHERS</span>
               <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
@@ -248,7 +266,7 @@ const Dashboard = () => {
                 return (
                   <div key={index} className='flex justify-center items-center w-fit'>
                     <div className='flex flex-col items-start justify-center bg-neutral-700 sm:p-2 p-1 lg:w-58 sm:w-50 2xs:w-42 w-52 rounded-2xl drop-shadow-xl h-fit hover:-translate-y-1 transition-all duration-150 ease-in-out xs:m-2 truncate'>
-                      <Image src={link.thumbnail} width={250} height={400} className='rounded-2xl lg:w-54 sm:w-46 2xs:w-40 lg:h-100 sm:h-85' alt='thumbnail' />
+                      <Image src={link.thumbnail} width={250} height={400} className='rounded-2xl lg:w-54 sm:w-46 2xs:w-40 lg:h-auto sm:h-auto' priority={index === 0} loading={index === 0 ? undefined : "lazy"} alt='thumbnail' />
                       <p className='text-wrap h-6 my-1 break-words truncate text-start lg:w-54 sm:w-46 w-40 max-lg:text-sm' title={link.caption}>{link.caption}</p>
                       <div className="flex gap-2 items-center justify-center w-full">
                         <Link href={link.videoUrl} target='_blank' className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">

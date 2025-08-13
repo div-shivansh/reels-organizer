@@ -78,7 +78,7 @@ const Navbar = () => {
                     {session?.user && (
                         <>
                             <div className="image flex max-md:hidden justify-center items-center relative p-1 bg-neutral-700 rounded-full group hover:gap-1 w-12 hover:w-33 transform transition-all duration-300">
-                                <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="picture" className='size-10 rounded-full transition-all ease-in duration-300 cursor-pointer' />
+                                <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="picture" priority className='w-auto h-auto rounded-full transition-all ease-in duration-300 cursor-pointer' />
                                 <button className='group-hover:px-2 font-medium group-hover:opacity-100 opacity-0 transform transition-all duration-300 overflow-hidden cursor-pointer' onClick={() => { signOut() }}>LOGOUT</button>
                             </div>
                             <div className="relative md:hidden" ref={ref}>
@@ -88,7 +88,7 @@ const Navbar = () => {
                                     type="button"
                                 >
                                     <span className="sr-only">Open user menu</span>
-                                    <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="picture" className='rounded-full size-10' />
+                                    <Image src={profileImage || "/dummy-avatar.png"} width={40} height={40} alt="picture" priority className='rounded-full w-auto h-auto' />
                                 </button>
 
                                 {open && (
