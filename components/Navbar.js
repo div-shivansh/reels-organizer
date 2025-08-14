@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useSession, signOut, signIn } from 'next-auth/react'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const Navbar = () => {
     const { data: session } = useSession()
