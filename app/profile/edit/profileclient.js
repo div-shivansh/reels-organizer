@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { toast } from 'react-toastify'
+import { motion } from 'framer-motion'
 
 const ProfileClient = ({ userData: actualdata }) => {
 
@@ -59,11 +60,11 @@ const ProfileClient = ({ userData: actualdata }) => {
         const val = e.target.value
         if (val.endsWith(" ")) {
             const newTag = val.trim()
-            if(newTag && !tags.includes(newTag)) {
+            if (newTag && !tags.includes(newTag)) {
                 setTags([...tags, newTag])
             }
             setInput("")
-        } else{
+        } else {
             setInput(val)
         }
     };
@@ -191,28 +192,28 @@ const ProfileClient = ({ userData: actualdata }) => {
         const r = await fetch("/api/add", requestOptions)
         const result = await r.json()
         if (result.success) {
-              toast.success(result.message || 'Profile updated successfully', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+            toast.success(result.message || 'Profile updated successfully', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
             router.push(`/dashboard`)
         } else {
-              toast.error(result.message || 'Something went wrong. Please reload or try later', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+            toast.error(result.message || 'Something went wrong. Please reload or try later', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
 
 
         }
@@ -230,11 +231,33 @@ const ProfileClient = ({ userData: actualdata }) => {
                             {uploading ? (
                                 <div className='text-neutral-500 border-white rounded-full border-2 py-1.5 px-10'>Uploading...</div>
                             ) : (
-                                <label htmlFor="filechose" className='button group relative inline-flex justify-center overflow-hidden whitespace-nowrap cursor-pointer rounded-full px-6 py-1 text-center transition-all duration-300 border border-transparent bg-transparent text-white hover:bg-white hover:text-black outline-2 outline-white outline-offset-2'>
-                                <span className='button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold'>Upload Photo</span>
-                                <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0"><span className="button-type font-semibold">Upload Photo</span></div>
-                                <input type="file" id='filechose' accept='image/*' onChange={handleImageChange} className='hidden' />
-                            </label>
+                                <motion.label htmlFor="filechose" 
+                                variants={{
+                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                          }}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                        >
+                          <motion.span
+                            initial={{ y: 0 }}
+                            variants={{
+                              hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: -40, transition: { duration: 0.1 } }
+                            }}
+                            transition={{ duration: 0.1 }}
+                            className="button-type font-semibold">Upload</motion.span>
+                          <motion.div
+                            initial={{ y: 40 }}
+                            variants={{
+                              hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: 0, transition: { duration: 0.1 } }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center">
+                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Upload</span>
+                          </motion.div>
+                                    <input type="file" id='filechose' accept='image/*' onChange={handleImageChange} className='hidden' />
+                                </motion.label>
                             )}
                             <span className='text-sm text-gray-400'>Atlest 256 x 256px PNG or JPG file</span>
                         </div>
@@ -319,12 +342,32 @@ const ProfileClient = ({ userData: actualdata }) => {
                     </section>
                 </div>
                 <div className='w-full lg:justify-end justify-center flex px-10'>
-                    <button type='submit' className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full cursor-pointer max-lg:w-full px-10 py-1.5 text-center transition-all duration-300 outline-2 outline-offset-2 outline-white bg-transparent text-white hover:bg-white ">
-                        <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Submit</span>
-                        <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold text-black">Submit</span>
-                        </div>
-                    </button>
+                    <motion.button type='submit'
+                        variants={{
+                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                        }}
+                        whileHover="hover"
+                        whileTap="tap"
+                        className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full max-lg:w-full px-10 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                    >
+                        <motion.span
+                            initial={{ y: 0 }}
+                            variants={{
+                                hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                                tap: { y: -40, transition: { duration: 0.1 } }
+                            }}
+                            transition={{ duration: 0.1 }}
+                            className="button-type font-semibold">Submit</motion.span>
+                        <motion.div
+                            initial={{ y: 40 }}
+                            variants={{
+                                hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                                tap: { y: 0, transition: { duration: 0.1 } }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center">
+                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Submit</span>
+                        </motion.div>
+                    </motion.button>
                 </div>
             </form>
         </div>

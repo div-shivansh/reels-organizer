@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { motion } from 'framer-motion'
 
 
 const Dashboard = () => {
@@ -17,6 +18,8 @@ const Dashboard = () => {
   const [search, setSearch] = useState('')
   const searchParams = useSearchParams()
   const filter = searchParams.get('filter') || 'all'
+
+  const MotionLink = motion(Link)
 
   const handlefilter = ({ tag }) => {
     router.push(`/dashboard?filter=${tag.toLowerCase()}`)
@@ -220,33 +223,93 @@ const Dashboard = () => {
             {userData && userData?.tags?.length > 0 ? (
               userData?.tags?.map((tag, index) => {
                 return (
-                  <div key={index} onClick={() => { handlefilter({ tag }) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
-                    <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">{tag.toUpperCase()}</span>
-                    <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+                  <motion.div key={index} onClick={() => { handlefilter({ tag }) }}
+                    variants={{
+                      tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                    }}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+                  >
+                    <motion.span
+                      initial={{ y: 0 }}
+                      variants={{
+                        hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                        tap: { y: -40, transition: { duration: 0.1 } }
+                      }}
+                      transition={{ duration: 0.1 }}
+                      className="button-type md:font-semibold max-xs:text-sm font-medium">{tag.toUpperCase()}</motion.span>
+                    <motion.div
+                      initial={{ y: 40 }}
+                      variants={{
+                        hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                        tap: { y: 0, transition: { duration: 0.1 } }
+                      }}
+                      className="absolute inset-0 flex items-center justify-center">
                       <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{tag.toUpperCase()}</span>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 )
               })
             ) : (
               defaultFilters.map((filter, index) => {
                 return (
-                  <div key={index} onClick={() => { handleDefaultfilter(filter.SecretCode) }} className="button group relative inline-flex justify-center truncate whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
-                    <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">{filter.name}</span>
-                    <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+                  <motion.div key={index} onClick={() => { handleDefaultfilter(filter.SecretCode) }}
+                    variants={{
+                      tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                    }}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+                  >
+                    <motion.span
+                      initial={{ y: 0 }}
+                      variants={{
+                        hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                        tap: { y: -40, transition: { duration: 0.1 } }
+                      }}
+                      transition={{ duration: 0.1 }}
+                      className="button-type md:font-semibold max-xs:text-sm font-medium">{filter.name}</motion.span>
+                    <motion.div
+                      initial={{ y: 40 }}
+                      variants={{
+                        hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                        tap: { y: 0, transition: { duration: 0.1 } }
+                      }}
+                      className="absolute inset-0 flex items-center justify-center">
                       <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{filter.name}</span>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 )
               })
             )
             }
-            <div onClick={handleRemains} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 xs:py-2 py-1 h-fit text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white mb-1">
-              <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold max-xs:text-sm font-medium">OTHERS</span>
-              <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+            <motion.div onClick={handleRemains}
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-10 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type md:font-semibold max-xs:text-sm font-medium">OTHERS</motion.span>
+              <motion.div
+                initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
                 <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">OTHERS</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
           </ul>
         </div>
@@ -269,18 +332,58 @@ const Dashboard = () => {
                       <Image src={link.thumbnail} width={250} height={400} className='rounded-2xl lg:w-54 sm:w-46 2xs:w-40 lg:h-auto sm:h-auto' priority={index === 0} loading={index === 0 ? undefined : "lazy"} alt='thumbnail' />
                       <p className='text-wrap h-6 my-1 break-words truncate text-start lg:w-54 sm:w-46 w-40 max-lg:text-sm' title={link.caption}>{link.caption}</p>
                       <div className="flex gap-2 items-center justify-center w-full">
-                        <Link href={link.videoUrl} target='_blank' className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-                          <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 lg:font-semibold font-medium text-sm">Watch</span>
-                          <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Watch</span>
-                          </div>
-                        </Link>
-                        <a onClick={handleDownload} href={link.videoUrl} target='_blank' className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-                          <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 lg:font-semibold font-medium text-sm">Download</span>
-                          <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Download</span>
-                          </div>
-                        </a>
+                        <MotionLink href={link.videoUrl} target='_blank'
+                          variants={{
+                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                          }}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                        >
+                          <motion.span
+                            initial={{ y: 0 }}
+                            variants={{
+                              hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: -40, transition: { duration: 0.1 } }
+                            }}
+                            transition={{ duration: 0.1 }}
+                            className="button-type lg:font-semibold font-medium text-sm">Watch</motion.span>
+                          <motion.div
+                            initial={{ y: 40 }}
+                            variants={{
+                              hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: 0, transition: { duration: 0.1 } }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center">
+                            <span className="button-type lg:font-semibold font-medium text-sm text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Watch</span>
+                          </motion.div>
+                        </MotionLink>
+                        <motion.a onClick={handleDownload} href={link.videoUrl} target='_blank'
+                          variants={{
+                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                          }}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                        >
+                          <motion.span
+                            initial={{ y: 0 }}
+                            variants={{
+                              hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: -40, transition: { duration: 0.1 } }
+                            }}
+                            transition={{ duration: 0.1 }}
+                            className="button-type lg:font-semibold font-medium text-sm">Download</motion.span>
+                          <motion.div
+                            initial={{ y: 40 }}
+                            variants={{
+                              hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: 0, transition: { duration: 0.1 } }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center">
+                            <span className="button-type lg:font-semibold font-medium text-sm text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Download</span>
+                          </motion.div>
+                        </motion.a>
                       </div>
                     </div>
                   </div>

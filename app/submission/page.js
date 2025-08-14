@@ -112,12 +112,32 @@ const Submission = () => {
                 {loading ? (
                     <div className='text-neutral-500 border-white rounded-full border-2 py-1.5 px-10'>Submitting...</div>
                 ) : (
-                    <button onClick={handleSubmitReel} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center cursor-pointer transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-                        <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Submit your links</span>
-                        <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Submit your links</span>
-                        </div>
-                    </button>
+                    <motion.button onClick={handleSubmitReel}
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type font-semibold">Submit Your Links</motion.span>
+              <motion.div
+                  initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
+                <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Submit Your Links</span>
+              </motion.div>
+            </motion.button>
                 )}
             </motion.div>
         </div>

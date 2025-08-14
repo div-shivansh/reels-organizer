@@ -105,12 +105,32 @@ const Navbar = () => {
                     }
                     {!session &&
                         <div className="buttons flex justify-center items-center gap-3 md:ml-10">
-                            <Link href={"/login"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center transition-all duration-300 border border-transparent bg-red-600 text-white hover:bg-red-800">
-                                <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Login</span>
-                                <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
-                                    <span className="button-type font-semibold">Login</span>
-                                </div>
-                            </div></Link>
+                            <Link href={"/login"}><motion.div 
+                            variants={{
+                            tap: { backgroundColor: "#9f0712", transition: { duration: 0.1, ease: "easeOut" } }
+                          }}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center border-2 border-white text-white bg-red-600 hover:bg-red-800 transition-all duration-200"
+                        >
+                          <motion.span
+                            initial={{ y: 0 }}
+                            variants={{
+                              hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: -40, transition: { duration: 0.1 } }
+                            }}
+                            transition={{ duration: 0.1 }}
+                            className="button-type font-semibold">Login</motion.span>
+                          <motion.div
+                            initial={{ y: 40 }}
+                            variants={{
+                              hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                              tap: { y: 0, transition: { duration: 0.1 } }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center">
+                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Login</span>
+                          </motion.div>
+                            </motion.div></Link>
                         </div>
                     }
                 </div>

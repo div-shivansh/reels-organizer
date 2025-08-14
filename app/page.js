@@ -20,18 +20,58 @@ export default function Home() {
             The Ultimate Reels Organizer is here to declutter your saved content. Categorize, filter, and find your favourite reels in seconds.
           </p>
           <div className="buttons flex items-center sm:gap-7 gap-4 px-15">
-            <a href="#steps"><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center transition-all duration-300 border-2 border-white bg-transparent  text-white hover:bg-white">
-              <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">Get Started</span>
-              <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+            <a href="#steps"><motion.div
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type font-semibold">Get Started</motion.span>
+              <motion.div
+                  initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
                 <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Get Started</span>
-              </div>
-            </div></a>
-            <Link href={"/about"}><div className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-              <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 font-semibold">About Us</span>
-              <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+              </motion.div>
+            </motion.div></a>
+            <Link href={"/about"}><motion.div
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type font-semibold">About Us</motion.span>
+              <motion.div
+                  initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
                 <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">About Us</span>
-              </div>
-            </div></Link>
+              </motion.div>
+            </motion.div></Link>
           </div>
         </div>
         <div className="right hidden w-full md:flex items-center justify-center">
@@ -57,7 +97,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center md:justify-center justify-between md:top-[5em] md:absolute md:gap-0 gap-2">
+              whileTap={{ scale: 1.02 }}
+              className="flex items-center md:justify-center justify-between md:top-[5em] md:absolute md:gap-0 gap-2 cursor-default">
               <div className="bg-gray-600 lg:size-30 md:size-25 size-15  md:w-inherit rounded-full drop-shadow-xl flex items-center md:justify-center justify-between p-2">
                 <div className="flex items-center justify-center bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] size-full rounded-full">
                   <span className="material-symbols-outlined icon">Login</span>
@@ -73,7 +114,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center md:justify-center justify-between md:top-[20em] md:absolute md:gap-0 gap-2">
+              whileTap={{ scale: 1.02 }}
+              className="flex items-center md:justify-center justify-between md:top-[20em] md:absolute md:gap-0 gap-2 cursor-default">
               <div className="bg-gray-600 lg:size-30 md:size-25 size-15  md:w-inherit rounded-full drop-shadow-xl flex items-center md:justify-center justify-between p-2">
                 <div className="flex items-center justify-center bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] size-full rounded-full">
                   <span className="material-symbols-outlined icon">Person_Add</span>
@@ -89,7 +131,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center md:justify-center justify-between md:top-[35em] md:absolute md:gap-0 gap-2">
+              whileTap={{ scale: 1.02 }}
+              className="flex items-center md:justify-center justify-between md:top-[35em] md:absolute md:gap-0 gap-2 cursor-default">
               <div className="bg-gray-600 lg:size-30 md:size-25 size-15  md:w-inherit rounded-full drop-shadow-xl flex items-center md:justify-center justify-between p-2">
                 <div className="flex items-center justify-center bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] size-full rounded-full">
                   <span className="material-symbols-outlined icon">Link</span>
@@ -105,7 +148,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center md:justify-center justify-between md:top-[50em] md:absolute md:gap-0 gap-2">
+              whileTap={{ scale: 1.02 }}
+              className="flex items-center md:justify-center justify-between md:top-[50em] md:absolute md:gap-0 gap-2 cursor-default">
               <div className="bg-gray-600 lg:size-30 md:size-25 size-15  md:w-inherit rounded-full drop-shadow-xl flex items-center md:justify-center justify-between p-2">
                 <div className="flex items-center justify-center bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] size-full rounded-full">
                   <span className="material-symbols-outlined icon">Category</span>
@@ -121,7 +165,8 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center md:justify-center justify-between md:top-[65em] md:absolute md:gap-0 gap-2">
+              whileTap={{ scale: 1.02 }}
+              className="flex items-center md:justify-center justify-between md:top-[65em] md:absolute md:gap-0 gap-2 cursor-default">
               <div className="bg-gray-600 lg:size-30 md:size-25 size-15  md:w-inherit rounded-full drop-shadow-xl flex items-center md:justify-center justify-between p-2">
                 <div className="flex items-center justify-center bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)] size-full rounded-full">
                   <span className="material-symbols-outlined icon">Browse</span>

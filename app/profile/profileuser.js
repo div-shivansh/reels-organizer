@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { motion } from 'framer-motion'
 
 const ProfileUser = () => {
   const { data: session, status } = useSession()
@@ -110,18 +111,58 @@ const ProfileUser = () => {
             <span className='text-neutral-500 md:text-base xs:text-sm text-xs'>Manage your profile information</span>
           </div>
           <div className='flex items-center max-xs:flex-col justify-center md:gap-5 gap-2 px-2'>
-            <button onClick={() => { router.push("/profile/edit") }} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap w-full rounded-full md:px-10 p-5 py-1.5 text-center cursor-pointer transition-all duration-300 border-2 bg-transparent border-white text-white hover:bg-white">
-              <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold font-medium">Edit Profile</span>
-              <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+            <motion.button onClick={() => {router.push("/profile/edit")}}
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type md:font-semibold font-medium">Edit Profile</motion.span>
+              <motion.div
+                  initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
                 <span className="button-type md:font-semibold font-medium text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Edit Profile</span>
-              </div>
-            </button>
-            <button onClick={() => { signOut() }} className="button group relative inline-flex justify-center overflow-hidden whitespace-nowrap w-full rounded-full md:px-10 px-5 py-1.5 text-center cursor-pointer transition-all duration-300 border-2 border-white bg-transparent text-white hover:bg-white">
-              <span className="button-type transition-transform duration-200 group-hover:-translate-y-10 md:font-semibold font-medium">Logout</span>
-              <div className="absolute inset-0 flex translate-y-full transform items-center justify-center transition-transform duration-200 group-hover:translate-y-0">
+              </motion.div>
+            </motion.button>
+            <motion.div onClick={() => {signOut()}}
+              variants={{
+                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+              }}
+              whileHover="hover"
+              whileTap="tap"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+            >
+              <motion.span
+                initial={{ y: 0 }}
+                variants={{
+                  hover: { y: -40, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: -40, transition: { duration: 0.1 } }
+                }}
+                transition={{ duration: 0.1 }}
+                className="button-type md:font-semibold font-medium">Logout</motion.span>
+              <motion.div
+                  initial={{ y: 40 }}
+                variants={{
+                  hover: { y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+                  tap: { y: 0, transition: { duration: 0.1 } }
+                }}
+                className="absolute inset-0 flex items-center justify-center">
                 <span className="button-type md:font-semibold font-medium text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Logout</span>
-              </div>
-            </button>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
         <div className='border-t-2 border-dashed mt-5 mb-10 border-neutral-500' />
