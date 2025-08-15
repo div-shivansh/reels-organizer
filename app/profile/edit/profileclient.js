@@ -233,11 +233,12 @@ const ProfileClient = ({ userData: actualdata }) => {
                             ) : (
                                 <motion.label htmlFor="filechose" 
                                 variants={{
-                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                            tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                            hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                           }}
                           whileHover="hover"
                           whileTap="tap"
-                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1 text-center border-2 border-white text-white"
                         >
                           <motion.span
                             initial={{ y: 0 }}
@@ -344,11 +345,12 @@ const ProfileClient = ({ userData: actualdata }) => {
                 <div className='w-full lg:justify-end justify-center flex px-10'>
                     <motion.button type='submit'
                         variants={{
-                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                            tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                            hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                         }}
                         whileHover="hover"
                         whileTap="tap"
-                        className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full max-lg:w-full px-10 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                        className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full max-lg:w-full px-10 py-1.5 text-center border-2 border-white text-white"
                     >
                         <motion.span
                             initial={{ y: 0 }}

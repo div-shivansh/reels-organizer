@@ -113,11 +113,12 @@ const ProfileUser = () => {
           <div className='flex items-center max-xs:flex-col justify-center md:gap-5 gap-2 px-2'>
             <motion.button onClick={() => {router.push("/profile/edit")}}
               variants={{
-                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+                tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" }},
+                hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
               }}
               whileHover="hover"
               whileTap="tap"
-              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white"
             >
               <motion.span
                 initial={{ y: 0 }}
@@ -139,11 +140,12 @@ const ProfileUser = () => {
             </motion.button>
             <motion.div onClick={() => {signOut()}}
               variants={{
-                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+                tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" }},
+                hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
               }}
               whileHover="hover"
               whileTap="tap"
-              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full md:px-10 p-5 py-1.5 w-full text-center border-2 border-white text-white"
             >
               <motion.span
                 initial={{ y: 0 }}

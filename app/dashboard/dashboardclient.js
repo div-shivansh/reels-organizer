@@ -198,16 +198,19 @@ const Dashboard = () => {
       </div>
     )
   }
+  const [fnameSession, ...rest] = session?.user?.name?.split(" ")
+  console.log("fname", fnameSession)
+  console.log("lname", rest.join(" "))
 
 
 
   return (
-    <div className='bg-neutral-800 min-h-[86vh] flex max-lg:flex-col text-white p-2'>
+    <div className='bg-neutral-800 min-h-[calc(100vh-128px)] flex max-lg:flex-col text-white p-2'>
       <div className='left lg:border-r-2 lg:border-neutral-500 md:pr-4 lg:w-[20vw] sticky'>
         <div className='flex items-center justify-center xl:gap-3 gap-1 bg-neutral-700 xl:py-2 py-1 px-1 rounded-xl drop-shadow-xl max-lg:hidden'>
           <Image src={userData?.image || session?.user?.image || "/dummy-avatar.png"} width={60} height={60} alt='profile' priority className=' 2xl:w-15 2xl:h-auto lg:h-auto lg:w-12 rounded-full hover:opacity-80 transition-all ease-in duration-100 cursor-pointer' />
           <div className='flex flex-col items-start justify-center truncate'>
-            <h3 className='2xl:text-lg lg:text-base 2xl:font-medium truncate w-full'>{userData?.fname || "Your"} {userData?.lname || "Name"}</h3>
+            <h3 className='2xl:text-lg lg:text-base 2xl:font-medium truncate w-full'>{userData?.fname || fnameSession || "Your"} {userData?.lname || rest.join(" ") || "Name"}</h3>
             <h4 className='2xl:text-sm text-xs text-green-400 truncate w-full'>@{userData?.username || "username"}</h4>
           </div>
           <Link href={"/profile"}>
@@ -225,11 +228,12 @@ const Dashboard = () => {
                 return (
                   <motion.div key={index} onClick={() => { handlefilter({ tag }) }}
                     variants={{
-                      tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                      tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" }},
+                      hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                     }}
                     whileHover="hover"
                     whileTap="tap"
-                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white cursor-pointer mb-1"
                   >
                     <motion.span
                       initial={{ y: 0 }}
@@ -246,7 +250,7 @@ const Dashboard = () => {
                         tap: { y: 0, transition: { duration: 0.1 } }
                       }}
                       className="absolute inset-0 flex items-center justify-center">
-                      <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{tag.toUpperCase()}</span>
+                      <span className="button-type md:font-semibold max-xs:text-sm font-medium text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{tag.toUpperCase()}</span>
                     </motion.div>
                   </motion.div>
                 )
@@ -256,11 +260,12 @@ const Dashboard = () => {
                 return (
                   <motion.div key={index} onClick={() => { handleDefaultfilter(filter.SecretCode) }}
                     variants={{
-                      tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                      tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                      hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                     }}
                     whileHover="hover"
                     whileTap="tap"
-                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+                    className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-15 xs:py-2 py-1 h-fit text-center border-2 border-white text-white cursor-pointer mb-1"
                   >
                     <motion.span
                       initial={{ y: 0 }}
@@ -277,7 +282,7 @@ const Dashboard = () => {
                         tap: { y: 0, transition: { duration: 0.1 } }
                       }}
                       className="absolute inset-0 flex items-center justify-center">
-                      <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{filter.name}</span>
+                      <span className="button-type md:font-semibold max-xs:text-sm font-medium text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">{filter.name}</span>
                     </motion.div>
                   </motion.div>
                 )
@@ -286,11 +291,12 @@ const Dashboard = () => {
             }
             <motion.div onClick={handleRemains}
               variants={{
-                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
               }}
               whileHover="hover"
               whileTap="tap"
-              className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-10 xs:py-2 py-1 h-fit text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer mb-1"
+              className="button relative inline-flex justify-center truncate  overflow-hidden whitespace-nowrap rounded-full px-10 xs:py-2 py-1 h-fit text-center border-2 border-white text-white cursor-pointer mb-1"
             >
               <motion.span
                 initial={{ y: 0 }}
@@ -307,7 +313,7 @@ const Dashboard = () => {
                   tap: { y: 0, transition: { duration: 0.1 } }
                 }}
                 className="absolute inset-0 flex items-center justify-center">
-                <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">OTHERS</span>
+                <span className="button-type md:font-semibold max-xs:text-sm font-medium text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">OTHERS</span>
               </motion.div>
             </motion.div>
 
@@ -334,11 +340,12 @@ const Dashboard = () => {
                       <div className="flex gap-2 items-center justify-center w-full">
                         <MotionLink href={link.videoUrl} target='_blank'
                           variants={{
-                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                            tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                            hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                           }}
                           whileHover="hover"
                           whileTap="tap"
-                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white"
                         >
                           <motion.span
                             initial={{ y: 0 }}
@@ -360,11 +367,12 @@ const Dashboard = () => {
                         </MotionLink>
                         <motion.a onClick={handleDownload} href={link.videoUrl} target='_blank'
                           variants={{
-                            tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" } }
+                            tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" } },
+                            hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
                           }}
                           whileHover="hover"
                           whileTap="tap"
-                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 lg:py-1.5 py-1 text-center border-2 border-white text-white"
                         >
                           <motion.span
                             initial={{ y: 0 }}

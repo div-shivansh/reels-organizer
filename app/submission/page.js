@@ -114,11 +114,12 @@ const Submission = () => {
                 ) : (
                     <motion.button onClick={handleSubmitReel}
               variants={{
-                tap: { backgroundColor: "white", transition: { duration: 0.1, ease: "easeOut" }}
+                tap: { backgroundColor: "#FFFFFF", transition: { duration: 0.1, ease: "easeOut" }},
+                hover: { backgroundColor: "#FFFFFF", transition: { duration: 0.2}}
               }}
               whileHover="hover"
               whileTap="tap"
-              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center border-2 border-white text-white bg-transparent hover:bg-white transition-all duration-200 cursor-pointer"
+              className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-10 py-1.5 text-center border-2 border-white text-white cursor-pointer"
             >
               <motion.span
                 initial={{ y: 0 }}

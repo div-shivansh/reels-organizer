@@ -108,11 +108,13 @@ const Navbar = () => {
                         <div className="buttons flex justify-center items-center gap-3 md:ml-10">
                             <Link href={"/login"}><motion.div 
                             variants={{
-                            tap: { backgroundColor: "#9f0712", transition: { duration: 0.1, ease: "easeOut" } }
+                            tap: { backgroundColor: "#991b1b", transition: { duration: 0.1, ease: "easeOut" } },
+                            hover: { backgroundColor: "#991b1b", transition: { duration: 0.2}}
                           }}
+                          initial={{backgroundColor:"#dc2626"}}
                           whileHover="hover"
                           whileTap="tap"
-                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full sm:px-10 px-5 py-1.5 text-center border-2 border-white text-white bg-red-600 hover:bg-red-800 transition-all duration-200"
+                          className="button relative inline-flex justify-center overflow-hidden whitespace-nowrap rounded-full px-6 py-1.5 text-center text-white"
                         >
                           <motion.span
                             initial={{ y: 0 }}
@@ -129,7 +131,7 @@ const Navbar = () => {
                               tap: { y: 0, transition: { duration: 0.1 } }
                             }}
                             className="absolute inset-0 flex items-center justify-center">
-                            <span className="button-type font-semibold text-transparent bg-clip-text bg-[linear-gradient(115deg,_#f9ce34,_#ee2a7b,_#6228d7)]">Login</span>
+                            <span className="button-type font-semibold text-white">Login</span>
                           </motion.div>
                             </motion.div></Link>
                         </div>
