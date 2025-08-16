@@ -152,12 +152,13 @@ const Dashboard = () => {
     } else if (filter === 'others') {
       const others = linksData.filter(link => {
         const hashtags = (link.hashtags || []).map(tag => tag.toLowerCase())
+        const captions = (link.caption || "").toLowerCase()
 
         if (hashtags.length === 0) return true;
         else if (userTags.length > 0) {
-          return !hashtags.some(tag => userTags.includes(tag))
+          return !hashtags.some(tag => userTags.includes(tag)) && !userTags.some(tag => captions.includes(tag))
         } else {
-          return !hashtags.some(c => defaultCategory.includes(c))
+          return !hashtags.some(c => defaultCategory.includes(c)) && !defaultCategory.some(c => captions.includes(c))
         }
       })
 
@@ -168,10 +169,12 @@ const Dashboard = () => {
         const hashtags = (link.hashtags || []).map(tag => tag.toLowerCase())
         if (defaultMatch) {
           return defaultMatch.category.some(category =>
-            hashtags?.some(tag => tag.toLowerCase().includes(category.toLowerCase()))
+            hashtags?.some(tag => tag.toLowerCase().includes(category.toLowerCase())) ||
+            link.caption.toLowerCase().includes(category.toLowerCase())
+
           )
         } else {
-          return hashtags?.some(tag => tag.toLowerCase().includes(filter))
+          return hashtags?.some(tag => tag.toLowerCase().includes(filter)) 
         }
       })
       setFilteredreels(filtered)
@@ -179,8 +182,102 @@ const Dashboard = () => {
   }, [filter, linksData, userData])
 
   const defaultFilters = [
-    { name: "COMEDY", SecretCode: "rdshye", category: ["memEs", "hello"] },
-    { name: "Food", SecretCode: "dnfjef", category: ["ORder", "Restaurent"] }
+     {
+    name: "Entertainment", SecretCode: "chakky",
+    category: [
+      "entertainment", "funny", "memes", "comedy", "standup","bollywood", "hollywood", "movies", "netflix", "series", "gaming", "reels"
+    ]
+  },
+  {
+    name: "Sports", SecretCode: "blorix",
+    category: [
+      "sports", "cricket", "football", "basketball", "tennis", "ipl", "worldcup", "fitness", "workout", "athlete"
+    ]
+  },
+  {
+    name: "Fashion", SecretCode: "zorlax",
+    category: [
+      "fashion", "style", "ootd", "outfits", "clothes", "aesthetic", "makeup", "beauty", "model", "luxury", "accessories"
+    ]
+  },
+  {
+    name: "Travel", SecretCode: "qwerty",
+    category: [
+      "travel", "wanderlust", "adventure", "vacation", "trip", "nature", "mountains", "beach", "roadtrip", "tourism", "heritage"
+    ]
+  },
+  {
+    name: "Food", SecretCode: "jumblu",
+    category: [
+      "food", "cooking", "recipe", "streetfood", "healthy", "restaurant", "foodie", "drinks", "baking", "dessert"
+    ]
+  },
+  {
+    name: "Business", SecretCode: "squink",
+    category: [
+      "business", "startup", "entrepreneur", "marketing", "finance", "investment", "stocks", "money", "ecommerce", "management"
+    ]
+  },
+  {
+    name: "News", SecretCode: "plenky",
+    category: [
+      "news", "politics", "currentaffairs", "worldnews", "breakingnews", "technology", "science", "economy"
+    ]
+  },
+  {
+    name: "Music", SecretCode: "vaxing",
+    category: [
+      "music", "songs", "instrumental", "singer", "guitar", "piano", "concert", "playlist", "rap", "dj"
+    ]
+  },
+  {
+    name: "Professional", SecretCode: "crelbu",
+    category: [
+      "professional", "career", "work", "job", "office", "resume", "interview", "finance", "ca", "tax", "business"
+    ]
+  },
+  {
+    name: "Knowledge", SecretCode: "snerpy",
+    category: [
+      "knowledge", "facts", "history", "education", "science", "technology", "coding", "maths", "books", "psychology"
+    ]
+  },
+  {
+    name: "Review", SecretCode: "hizrud",
+    category: [
+      "review", "unboxing", "tech", "gadgets", "movies", "products", "apps", "games", "opinions", "recommendations"
+    ]
+  },
+  {
+    name: "Crafts", SecretCode: "whiffl",
+    category: [
+      "crafts", "diy", "handmade", "artandcraft", "painting", "sketch", "drawing", "origami", "creativity", "homedecor"
+    ]
+  },
+  {
+    name: "Animals", SecretCode: "gribbo",
+    category: [
+      "animals", "pets", "dogs", "cats", "wildlife", "zoo", "cute", "nature", "animalvideos", "birds"
+    ]
+  },
+  {
+    name: "Art", SecretCode: "yumblu",
+    category: [
+      "art", "digitalart", "painting", "drawing", "sketch", "artist", "illustration", "design", "aesthetic", "creativity"
+    ]
+  },
+  {
+    name: "Satisfying", SecretCode: "zibble",
+    category: [
+      "satisfying", "asmr", "relaxing", "oddlysatisfying", "soothing", "calm", "aesthetic", "satisfyingvideo", "relax"
+    ]
+  },
+  {
+    name: "Romance", SecretCode: "lovrix",
+    category: [
+      "romance", "romantic", "love", "couple", "relationship", "valentine", "heart", "romcom", "date", "crush"
+    ]
+  },
   ]
 
 
@@ -199,9 +296,6 @@ const Dashboard = () => {
     )
   }
   const [fnameSession, ...rest] = session?.user?.name?.split(" ")
-  console.log("fname", fnameSession)
-  console.log("lname", rest.join(" "))
-
 
 
   return (
