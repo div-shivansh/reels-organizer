@@ -14,8 +14,11 @@ export const metadata = {
   title: "Reels Organizer",
   description: "save and Categorize instagram reels easily",
   manifest: "/manifest.json",
-  themeColor: "#000000"
 };
+
+export const viewport = {
+  themeColor: "#000000"
+}
 
 
 export default function RootLayout({ children }) {
