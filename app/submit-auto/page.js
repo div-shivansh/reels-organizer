@@ -27,5 +27,5 @@ export default function SubmitAuto() {
       
     }, [router, searchParam, session])
     
-    return <p>This is an automated page. SO please don't waste your time here.</p>
+    return <p>This is an automated page. SO please don&apos;t waste your time here.</p>
 }
