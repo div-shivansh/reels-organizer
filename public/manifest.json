@@ -6,6 +6,16 @@
     "background_color": "#FFFFFF",
     "theme_color": "#000000",
     "orientation": "portrait",
+    "share_target": {
+      "action": "/submit-auto",
+      "method": "POST",
+      "enctype": "application/x-www-form-urlencoded",
+      "params": {
+        "title": "title",
+        "text": "text",
+        "url": "url"
+      }
+    },
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",
