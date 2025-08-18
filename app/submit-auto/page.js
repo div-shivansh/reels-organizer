@@ -10,8 +10,10 @@ function SubmitAutofunction() {
 
     useEffect(() => {
         const url = searchParam.get("url")
-
+        
         if(url && session?.user?.email) {
+            console.log("url", url)
+            console.log(session.user.email)
             fetch("/api/submit", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
