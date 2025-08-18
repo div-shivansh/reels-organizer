@@ -9,6 +9,7 @@
     "share_target": {
       "action": "/submit-auto",
       "method": "GET",
+      "enctype": "application/x-www-form-urlencoded",
       "params": {
         "title": "title",
         "text": "text",

@@ -9,17 +9,27 @@ function SubmitAutofunction() {
     const { data : session } = useSession()
 
     useEffect(() => {
-        const url = searchParam.get("url")
-        
-        if(url && session?.user?.email) {
-            console.log("url", url)
-            console.log(session.user.email)
+        const sharedText = searchParam.get("text")
+        if (!sharedText) return
+
+        const decoding = decodeURIComponent(sharedText)
+        console.log("uncodedurl:",decoding)
+
+        const match = decoding.match(/https:\/\/www\.instagram\.com\/reel\/([a-zA-Z0-9_-]+)/)
+        console.log("match:",match)
+
+        if (match) {
+            const cleanLink = `https://www.instagram.com/reel/${match[1]}`
+            console.log("clean link:", cleanLink)
+        }
+
+        if(cleanLink && session?.user?.email) {
             fetch("/api/submit", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     userEmail: session.user.email,
-                    url
+                    url : cleanLink
                 })
             }).then(() => {
                 router.push("/")
