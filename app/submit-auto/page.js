@@ -21,19 +21,19 @@ function SubmitAutofunction() {
         if (match) {
             const cleanLink = `https://www.instagram.com/reel/${match[1]}`
             console.log("clean link:", cleanLink)
-        }
-
-        if(cleanLink && session?.user?.email) {
-            fetch("/api/submit", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    userEmail: session.user.email,
-                    url : cleanLink
+            
+            if(cleanLink && session?.user?.email) {
+                fetch("/api/submit", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        userEmail: session.user.email,
+                        url : cleanLink
+                    })
+                }).then(() => {
+                    router.push("/")
                 })
-            }).then(() => {
-                router.push("/")
-            })
+            }
         }
       
     }, [router, searchParam, session])
